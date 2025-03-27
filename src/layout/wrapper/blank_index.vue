@@ -10,6 +10,7 @@
 	</div>
 </template>
 <script>
+import TopClient from "../components/TopClient.vue";
 import "../../assets/js/bootstrap.bundle.min.js";
 import "../../assets/js/jquery.min.js";
 import "../../assets/plugins/simplebar/js/simplebar.min.js";

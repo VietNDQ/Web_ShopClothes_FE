@@ -9,7 +9,11 @@
                     <label for="">Tên Thương Hiệu</label>
                     <input v-model="create.ten_thuong_hieu" type="text" class="form-control mt-2 mb-2"
                         placeholder="Nhập tên Thương Hiệu">
-
+                    <label for="">Tình Trạng</label>
+                    <select v-model="create.tinh_trang" class="form-control mt-2 mb-2" name="" id="">
+                        <option value="1">Còn Hàng</option>
+                        <option value="0">Hết Hàng</option>
+                    </select>
                     <label for="">Mô tả</label>
                     <textarea v-model="create.mo_ta" class="form-control mt-2 mb-2" rows="3"
                         placeholder="Nhập mô tả Thương Hiệu..."></textarea>
@@ -27,7 +31,8 @@
                 </div>
                 <div class="card-body">
                     <div class="input-group">
-                        <input v-on:keyup.enter="timKiem()" v-model="search.noi_dung" type="text" class="form-control search-control" placeholder="Type to search...">
+                        <input v-on:keyup.enter="timKiem()" v-model="search.noi_dung" type="text"
+                            class="form-control search-control" placeholder="Type to search...">
                         <button @click="timKiem()" class="btn btn-success">Tìm kiếm</button>
                     </div>
                     <div class="table-responsive mt-2">
@@ -37,21 +42,30 @@
                                     <th>#</th>
                                     <th>Tên Thương Hiệu</th>
                                     <th>Mô Tả</th>
+                                    <th>Tình Trạng</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <template v-for="(value, index) in list" :key="index">
                                     <tr>
-                                        <td class="text-center align-middle">{{ index + 1 }}</td>
+                                        <th class="text-center align-middle">{{ index + 1 }}</th>
                                         <td class="text-center align-middle">{{ value.ten_thuong_hieu }}</td>
-                                        <td class="align-middle">{{ value.mo_ta }}</td>
+                                        <td class="align-middle wrap-text">{{ value.mo_ta }}</td>
+                                        <td class="align-middle text-center">
+                                            <button v-on:click="doiTrangThai(value)" v-if="value.tinh_trang == 1"
+                                                class="btn btn-success btn-sm">Còn Hàng</button>
+                                            <button v-on:click="doiTrangThai(value)" v-else
+                                                class="btn btn-warning btn-sm">Hết Hàng</button>
+                                        </td>
                                         <td class="text-center align-middle" style="width: 20%;">
-                                            <button v-on:click="Object.assign(edit, value)" class="btn btn-sm btn-primary me-2" data-bs-toggle="modal"
+                                            <button v-on:click="Object.assign(edit, value)"
+                                                class="btn btn-sm btn-primary me-2" data-bs-toggle="modal"
                                                 data-bs-target="#update"><i class="fa-solid fa-wrench fa-xs"></i> Cập
                                                 nhập</button>
-                                            <button v-on:click="Object.assign(del, value)" class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#delete"><i class="fa-solid fa-trash fa-xs"></i>
+                                            <button v-on:click="Object.assign(del, value)" class="btn btn-sm btn-danger"
+                                                data-bs-toggle="modal" data-bs-target="#delete"><i
+                                                    class="fa-solid fa-trash fa-xs"></i>
                                                 Xóa</button>
                                         </td>
                                     </tr>
@@ -75,14 +89,18 @@
                     <label for="">Tên Thương Hiệu</label>
                     <input v-model="edit.ten_thuong_hieu" type="text" class="form-control mt-2 mb-2"
                         placeholder="Nhập tên Thương Hiệu">
-
+                    <select v-model="edit.tinh_trang" class="form-control mt-2 mb-2" name="" id="">
+                        <option value="1">Còn Hàng</option>
+                        <option value="0">Hết Hàng</option>
+                    </select>
                     <label for="">Mô tả</label>
                     <textarea v-model="edit.mo_ta" class="form-control mt-2 mb-2" rows="3"
                         placeholder="Nhập mô tả Thương Hiệu..."></textarea>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button @click="capNhap()" type="button" class="btn btn-primary" data-bs-dismiss="modal">Cập Nhập</button>
+                    <button @click="capNhap()" type="button" class="btn btn-primary" data-bs-dismiss="modal">Cập
+                        Nhập</button>
                 </div>
             </div>
         </div>
@@ -127,16 +145,18 @@ export default {
         return {
             create: {
                 'ten_thuong_hieu': "",
+                'tinh_trang': "",
                 'mo_ta': "",
             },
             edit: {
                 'ten_thuong_hieu': "",
+                'tinh_trang': "",
                 'mo_ta': "",
             },
             del: {
-                'id' : "",
+                'id': "",
             },
-            search:{},
+            search: {},
             list: []
         }
     },
@@ -144,32 +164,44 @@ export default {
         this.loadData();
     },
     methods: {
-        timKiem(){
-            if(this.search.ten_thuong_hieu == "") {
+        doiTrangThai(value) {
+            axios
+                .post("http://127.0.0.1:8000/api/admin/thuong-hieu/change-status", value)
+                .then((res) => {
+                    if (res.data.status) {
+                        this.$toast.success(res.data.message);
+                        this.loadData();
+                    } else {
+                        this.$toast.error(res.data.message);
+                    }
+                })
+        },
+        timKiem() {
+            if (this.search.ten_thuong_hieu == "") {
                 this.loadData();
                 return;
             }
             axios
-            .post("http://127.0.0.1:8000/api/admin/thuong-hieu/search", this.search)
+                .post("http://127.0.0.1:8000/api/admin/thuong-hieu/search", this.search)
                 .then((res) => {
                     this.list = res.data.data;
                 })
                 .catch((res) => {
                     const list = Object.values(res.response.data.errors);
-             
+
                     list.forEach((v, i) => {
                         this.$toast.error(v[0]);
                     });
                 })
         },
-        xoa(){
+        xoa() {
             axios
-                .post("http://127.0.0.1:8000/api/admin/thuong-hieu/delete",this.del)
-                .then((res)=>{
+                .post("http://127.0.0.1:8000/api/admin/thuong-hieu/delete", this.del)
+                .then((res) => {
                     if (res.data.status) {
                         this.$toast.success(res.data.message);
                         this.loadData();
-                    } else {                    
+                    } else {
                         this.$toast.error(res.data.message);
                     }
                 })
@@ -234,4 +266,10 @@ export default {
     },
 }
 </script>
-<style></style>
+<style>
+.wrap-text {
+    max-width: 292px;
+    word-wrap: break-word;
+    white-space: normal;
+}
+</style>

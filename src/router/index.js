@@ -7,22 +7,27 @@ const routes = [
     meta: { layout: "default" },
   },
   {
-    path: "/san-pham",
+    path: "/admin/khach-hang",
+    component: () => import("../components/Admin/KhachHang/index.vue"),
+    meta: { layout: "default" },
+  },
+  {
+    path: "/admin/san-pham",
     component: () => import("../components/Admin/SanPham/index.vue"),
     meta: { layout: "default" },
   },
   {
-    path: "/danh-muc-san-pham",
+    path: "/admin/danh-muc-san-pham",
     component: () => import("../components/Admin/DanhMuc/index.vue"),
     meta: { layout: "default" },
   },
   {
-    path: "/thuong-hieu",
+    path: "/admin/thuong-hieu",
     component: () => import("../components/Admin/ThuongHieu/index.vue"),
     meta: { layout: "default" },
   },
   {
-    path: "/bien-the-san-pham",
+    path: "/admin/bien-the-san-pham",
     component: () => import("../components/Admin/BienTheSanPham/index.vue"),
     meta: { layout: "default" },
   },
@@ -30,7 +35,7 @@ const routes = [
   {
     path: "/khach-hang/dang-nhap",
     component: () => import("../components/KhachHang/DangNhap/index.vue"),
-    meta: { layout: "blank" },
+    meta: { layout: "client" },
   },
   {
     path: "/khach-hang/dang-ky",

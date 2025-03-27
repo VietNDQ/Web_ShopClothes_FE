@@ -5,8 +5,8 @@
                 <div class="card-header mt-2">
                     <div class="d-flex justify-content-between">
                         <h4>Danh Sách Biến Thể Sản Phẩm</h4>
-                        <button @click="themMoi()" class="btn btn-danger" data-bs-toggle="modal"
-                            data-bs-target="#themMoi"><i class="fa-solid fa-plus"></i>Thêm Mới</button>
+                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#themMoi"><i
+                                class="fa-solid fa-plus"></i>Thêm Mới</button>
 
                     </div>
                     <div class="input-group mt-3">
@@ -29,9 +29,11 @@
                                     <th>Kích Thước</th>
                                     <th>Màu Sắc</th>
                                     <th>Chất Liệu</th>
-                                    <th>Giá Nhập</th>
-                                    <th>Giá Bán</th>
-                                    <th>Số Lượng Tồn</th>
+                                    <th class="text-nowrap" style="width: 10%;">
+                                        <i @click="up()" class="fa-solid fa-up-long text-danger fa-lg"></i>
+                                        Số Lượng Tồn
+                                        <i @click="down()" class="fa-solid fa-down-long text-primary fa-lg"></i>
+                                    </th>
                                     <th>Tình Trạng</th>
                                     <th>Action</th>
                                 </tr>
@@ -40,21 +42,18 @@
                                 <template v-for="(value, index) in list" :key="index">
                                     <tr>
                                         <th class="text-center align-middle">{{ index + 1 }}</th>
-                                        <td class="align-middle">{{ value.id_san_pham }}</td>
+                                        <td class="align-middle">{{ value.ten_san_pham }}</td>
                                         <td class="align-middle text-center">{{ value.kich_thuoc }}</td>
                                         <td class="align-middle">{{ value.mau_sac }}</td>
                                         <td class="align-middle">{{ value.chat_lieu }}</td>
-                                        <td class="align-middle text-end">{{ formatVND(value.gia_nhap) }}</td>
-                                        <td class="align-middle text-end">{{ formatVND(value.gia_ban) }}</td>
                                         <td class="align-middle text-end">{{ value.so_luong_ton }}</td>
                                         <td class="align-middle text-center">
                                             <button v-on:click="doiTrangThai(value)" v-if="value.tinh_trang == 1"
-                                                class="btn btn-success me-2">Còn
-                                                Hàng</button>
+                                                class="btn btn-success btn-sm">Còn Hàng</button>
                                             <button v-on:click="doiTrangThai(value)" v-else
-                                                class="btn btn-warning me-2">Hết Hàng</button>
+                                                class="btn btn-warning btn-sm">Hết Hàng</button>
                                         </td>
-                                        <td class="align-middle text-center">
+                                        <td class="align-middle text-center" style="width: 15%;">
                                             <button v-on:click="Object.assign(edit, value)"
                                                 class="btn btn-sm btn-primary me-2" data-bs-toggle="modal"
                                                 data-bs-target="#update">
@@ -67,7 +66,6 @@
                                         </td>
                                     </tr>
                                 </template>
-
                             </tbody>
                         </table>
                     </div>
@@ -112,19 +110,10 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <label for="">Giá Nhập</label>
-                                    <input v-model="create.gia_nhap" type="number" step="5000" class="form-control mt-2 mb-2">
-                                </div>
-                                <div class="col-lg-6">
-                                    <label for="">Giá Bán</label>
-                                    <input v-model="create.gia_ban" type="number" step="5000" class="form-control mt-2 mb-2">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6">
 
                                     <label for="">Số Lượng Tồn</label>
-                                    <input v-model="create.so_luong_ton" type="number" step="10" class="form-control mt-2 mb-2">
+                                    <input v-model="create.so_luong_ton" type="number" step="10"
+                                        class="form-control mt-2 mb-2">
                                 </div>
                                 <div class="col-lg-6">
                                     <label for="">Tình Trạng</label>
@@ -139,14 +128,15 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Thêm Mới</button>
+                    <button @click="themMoi()" type="button" class="btn btn-primary" data-bs-dismiss="modal">Thêm
+                        Mới</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- Modal Cập Nhật-->
     <div class="modal fade" id="update" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Cập Nhật Biến Thể Sản Phẩm</h1>
@@ -181,19 +171,9 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <label for="">Giá Nhập</label>
-                                    <input v-model="edit.gia_nhap" type="number" step="5000" class="form-control mt-2 mb-2">
-                                </div>
-                                <div class="col-lg-6">
-                                    <label for="">Giá Bán</label>
-                                    <input v-model="edit.gia_ban" type="number" step="5000" class="form-control mt-2 mb-2">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6">
-
                                     <label for="">Số Lượng Tồn</label>
-                                    <input v-model="edit.so_luong_ton" type="number" step="10" class="form-control mt-2 mb-2">
+                                    <input v-model="edit.so_luong_ton" type="number" step="10"
+                                        class="form-control mt-2 mb-2">
                                 </div>
                                 <div class="col-lg-6">
                                     <label for="">Tình Trạng</label>
@@ -261,8 +241,6 @@ export default {
                 'kich_thuoc': "",
                 'mau_sac': "",
                 'chat_lieu': "",
-                'gia_nhap': "",
-                'gia_ban': "",
                 'so_luong_ton': "",
                 'tinh_trang': "",
             },
@@ -271,8 +249,6 @@ export default {
                 'kich_thuoc': "",
                 'mau_sac': "",
                 'chat_lieu': "",
-                'gia_nhap': "",
-                'gia_ban': "",
                 'so_luong_ton': "",
                 'tinh_trang': "",
             },
@@ -289,6 +265,7 @@ export default {
         timKiem() {
             if (this.search.noi_dung == "") {
                 this.loadData();
+                this.loadDataSanPham();
                 return;
             }
             axios
@@ -311,6 +288,7 @@ export default {
                     if (res.data.status) {
                         this.$toast.success(res.data.message);
                         this.loadData();
+                        this.loadDataSanPham();
                     } else {
                         this.$toast.error(res.data.message);
                     }
@@ -323,13 +301,12 @@ export default {
                     if (res.data.status) {
                         this.$toast.success(res.data.message);
                         this.loadData();
+                        this.loadDataSanPham();
                         this.edit = {
                             'id_san_pham': "",
                             'kich_thuoc': "",
                             'mau_sac': "",
                             'chat_lieu': "",
-                            'gia_nhap': "",
-                            'gia_ban': "",
                             'so_luong_ton': "",
                             'tinh_trang': "",
                         }
@@ -351,13 +328,12 @@ export default {
                     if (res.data.status) {
                         this.$toast.success(res.data.message);
                         this.loadData();
+                        this.loadDataSanPham();
                         this.create = {
                             'id_san_pham': "",
                             'kich_thuoc': "",
                             'mau_sac': "",
                             'chat_lieu': "",
-                            'gia_nhap': "",
-                            'gia_ban': "",
                             'so_luong_ton': "",
                             'tinh_trang': "",
                         }
@@ -379,6 +355,7 @@ export default {
                     if (res.data.status) {
                         this.$toast.success(res.data.message);
                         this.loadData();
+                        this.loadDataSanPham();
                     } else {
                         this.$toast.error(res.data.message);
                     }
@@ -397,6 +374,12 @@ export default {
                 .then((res) => {
                     this.list = res.data.data;
                 })
+        },
+        up() {
+            this.list.sort((a, b) => a.so_luong_ton - b.so_luong_ton);
+        },
+        down() {
+            this.list.sort((a, b) => b.so_luong_ton - a.so_luong_ton);
         },
         formatVND(number) {
             return new Intl.NumberFormat("vi-VI", {

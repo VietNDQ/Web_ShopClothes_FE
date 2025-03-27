@@ -35,9 +35,15 @@
                                         <th>Tên Sản Phẩm</th>
                                         <th>Tên Thương Hiệu</th>
                                         <th>Tên Danh Mục</th>
-                                        <th>Giá(VNĐ)</th>
+                                        <th>Giá Gốc(VND)</th>
+                                        <th>Giá Bán(VND)</th>
+                                        <th>Giám Giá(%)</th>
                                         <th>Hình Ảnh</th>
-                                        <th>Số Lượng Tồn</th>
+                                        <th class="text-nowrap" style="width: 10%;">
+                                            <i @click="up()" class="fa-solid fa-up-long text-danger fa-lg"></i>
+                                            Tổng Số Lượng Tồn
+                                            <i @click="down()" class="fa-solid fa-down-long text-primary fa-lg"></i>
+                                        </th>
                                         <th>Tình Trạng</th>
                                         <th>Mô Tả</th>
                                         <th>Action</th>
@@ -50,7 +56,13 @@
                                             <td class="align-middle">{{ value.ten_san_pham }}</td>
                                             <td class="align-middle">{{ value.ten_thuong_hieu }}</td>
                                             <td class="align-middle">{{ value.ten_danh_muc }}</td>
+                                            <td class="align-middle text-end">{{ formatVND(value.gia_goc) }}</td>
                                             <td class="align-middle text-end">{{ formatVND(value.gia_ban) }}</td>
+                                            <td class="align-middle text-center"><span
+                                                    class="btn btn-outline-danger rounded-circle p-2 d-inline-flex align-items-center justify-content-center"
+                                                    style="width: 40px; height: 40px;">
+                                                    {{ value.giam_gia }}%
+                                                </span></td>
                                             <td class="align-middle text-center">
                                                 <img :src="value.hinh_anh" class="img-fluid" alt="Rolex Submariner" />
                                             </td>
@@ -163,16 +175,15 @@
                                 </div>
                                 <div class="col-lg-6 col-md-auto">
                                     <label for="">Giá Sản Phẩm(VNĐ)</label>
-                                    <input v-model="create.gia_ban" type="number" step="2"
+                                    <input v-model="create.gia_goc" type="number" step="2"
                                         class="form-control mt-2 mb-2" />
                                 </div>
 
                             </div>
                             <div class="row mt-2">
-                                <div class="col-lg-6 col-md-auto">
-                                    <label for="">Số Lượng Tồn</label>
-                                    <input v-model="create.so_luong_ton" type="number" step="1"
-                                        class="form-control mt-2 mb-2" />
+                                <div class="col-lg-6">
+                                    <label for="">Giảm Giá(%)</label>
+                                    <input v-model="create.giam_gia" type="text" class="form-control">
                                 </div>
                                 <div class="col-lg-6">
                                     <label for="">Tình Trạng</label>
@@ -205,7 +216,7 @@
     </div>
     <!-- Modal Cập Nhập-->
     <div class="modal fade" id="update" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Cập Nhật Sản Phẩm</h1>
@@ -253,16 +264,15 @@
                                 </div>
                                 <div class="col-lg-6 col-md-auto">
                                     <label for="">Giá Sản Phẩm(VNĐ)</label>
-                                    <input v-model="edit.gia_ban" type="number" step="2"
+                                    <input v-model="edit.gia_goc" type="number" step="2"
                                         class="form-control mt-2 mb-2" />
                                 </div>
 
                             </div>
                             <div class="row mt-2">
-                                <div class="col-lg-6 col-md-auto">
-                                    <label for="">Số Lượng Tồn</label>
-                                    <input v-model="edit.so_luong_ton" type="number" step="1"
-                                        class="form-control mt-2 mb-2" />
+                                <div class="col-lg-6">
+                                    <label for="">Giảm Giá(%)</label>
+                                    <input v-model="edit.giam_gia" type="text" class="form-control">
                                 </div>
                                 <div class="col-lg-6">
                                     <label for="">Tình Trạng</label>
@@ -337,8 +347,8 @@ export default {
                 'id_danh_muc': "",
                 'ten_san_pham': "",
                 'slug_san_pham': "",
-                'gia_ban': "",
-                'so_luong_ton': "",
+                'gia_goc': "",
+                'giam_gia': "",
                 'hinh_anh': "",
                 'mo_ta': "",
                 'tinh_trang': "",
@@ -348,8 +358,8 @@ export default {
                 'id_danh_muc': "",
                 'ten_san_pham': "",
                 'slug_san_pham': "",
-                'gia_ban': "",
-                'so_luong_ton': "",
+                'gia_goc': "",
+                'giam_gia': "",
                 'hinh_anh': "",
                 'mo_ta': "",
                 'tinh_trang': "",
@@ -430,8 +440,8 @@ export default {
                             'id_danh_muc': "",
                             'ten_san_pham': "",
                             'slug_san_pham': "",
-                            'gia_ban': "",
-                            'so_luong_ton': "",
+                            'gia_goc': "",
+                            'giam_gia': "",
                             'hinh_anh': "",
                             'mo_ta': "",
                             'tinh_trang': "",
@@ -459,8 +469,9 @@ export default {
                             'id_danh_muc': "",
                             'ten_san_pham': "",
                             'slug_san_pham': "",
-                            'gia_ban': "",
-                            'so_luong_ton': "",
+                            'gia_goc': "",
+                            'giam_gia': "",
+
                             'hinh_anh': "",
                             'mo_ta': "",
                             'tinh_trang': "",
@@ -478,18 +489,27 @@ export default {
         },
         loadDataDanhMuc() {
             axios
-                .get("http://127.0.0.1:8000/api/admin/danh-muc/data")
+                .get("http://127.0.0.1:8000/api/admin/danh-muc/data-open")
                 .then((res) => {
                     this.list_danh_muc = res.data.data;
                 })
         },
         loadDataThuongHieu() {
             axios
-                .get("http://127.0.0.1:8000/api/admin/thuong-hieu/data")
+                .get("http://127.0.0.1:8000/api/admin/thuong-hieu/data-open")
                 .then((res) => {
                     this.list_thuong_hieu = res.data.data;
                 })
         },
+        up() {
+            // Sắp xếp theo tổng số lượng tồn tăng dần
+            this.list.sort((a, b) => a.TONG_SL_TON - b.TONG_SL_TON);
+        },
+        down() {
+            // Sắp xếp theo tổng số lượng tồn giảm dần
+            this.list.sort((a, b) => b.TONG_SL_TON - a.TONG_SL_TON);
+        },
+
         loadData() {
             axios
                 .get("http://127.0.0.1:8000/api/admin/san-pham/data")
@@ -507,3 +527,4 @@ export default {
 }
 </script>
 <style></style>
+x`x`

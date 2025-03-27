@@ -9,7 +9,10 @@
                     <label for="">Tên danh mục</label>
                     <input v-model="create.ten_danh_muc" type="text" class="form-control mt-2 mb-2"
                         placeholder="Nhập tên danh mục">
-
+                    <select v-model="create.tinh_trang" class="form-control mt-2 mb-2" name="" id="">
+                        <option value="1">Còn Hàng</option>
+                        <option value="0">Hết Hàng</option>
+                    </select>
                     <label for="">Mô tả</label>
                     <textarea v-model="create.mo_ta" class="form-control mt-2 mb-2" rows="3"
                         placeholder="Nhập mô tả danh mục..."></textarea>
@@ -38,15 +41,22 @@
                                     <th>#</th>
                                     <th>Tên Danh Mục</th>
                                     <th>Mô Tả</th>
+                                    <th>Tình Trạng</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <template v-for="(value, index) in list" :key="index">
                                     <tr>
-                                        <td class="text-center align-middle">{{ index + 1 }}</td>
+                                        <th class="text-center align-middle">{{ index + 1 }}</th>
                                         <td class="text-center align-middle">{{ value.ten_danh_muc }}</td>
-                                        <td class="align-middle">{{ value.mo_ta }}</td>
+                                        <td class="align-middle wrap-text">{{ value.mo_ta }}</td>
+                                        <td class="align-middle text-center">
+                                                <button v-on:click="doiTrangThai(value)" v-if="value.tinh_trang == 1"
+                                                    class="btn btn-success btn-sm">Còn Hàng</button>
+                                                <button v-on:click="doiTrangThai(value)" v-else
+                                                    class="btn btn-warning btn-sm">Hết Hàng</button>
+                                        </td>
                                         <td class="text-center align-middle" style="width: 20%;">
                                             <button v-on:click="Object.assign(edit, value)"
                                                 class="btn btn-sm btn-primary me-2" data-bs-toggle="modal"
@@ -78,7 +88,10 @@
                     <label for="">Tên danh mục</label>
                     <input v-model="edit.ten_danh_muc" type="text" class="form-control mt-2 mb-2"
                         placeholder="Nhập tên danh mục">
-
+                    <select v-model="edit.tinh_trang" class="form-control mt-2 mb-2" name="" id="">
+                        <option value="1">Còn Hàng</option>
+                        <option value="0">Hết Hàng</option>
+                    </select>
                     <label for="">Mô tả</label>
                     <textarea v-model="edit.mo_ta" class="form-control mt-2 mb-2" rows="3"
                         placeholder="Nhập mô tả danh mục..."></textarea>
@@ -130,10 +143,12 @@ export default {
         return {
             create: {
                 'ten_danh_muc': "",
+                'tinh_trang': "",
                 'mo_ta': "",
             },
             edit: {
                 'ten_danh_muc': "",
+                'tinh_trang': "",
                 'mo_ta': "",
             },
             del: {
@@ -147,6 +162,18 @@ export default {
         this.loadData();
     },
     methods: {
+        doiTrangThai(value) {
+            axios
+                .post("http://127.0.0.1:8000/api/admin/danh-muc/change-status", value)
+                .then((res) => {
+                    if (res.data.status) {
+                        this.$toast.success(res.data.message);
+                        this.loadData();
+                    } else {
+                        this.$toast.error(res.data.message);
+                    }
+                })
+        },
         timKiem() {
             if (this.search.ten_danh_muc == "") {
                 this.loadData();
@@ -237,4 +264,12 @@ export default {
     },
 }
 </script>
-<style></style>
+<style>
+.wrap-text {
+    max-width: 292px;
+    /* Điều chỉnh độ rộng theo ý bạn */
+    word-wrap: break-word;
+    /* Hoặc overflow-wrap: break-word; */
+    white-space: normal;
+}
+</style>

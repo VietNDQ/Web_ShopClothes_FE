@@ -1,14 +1,13 @@
 <template>
-    <div class="d-flex align-items-center justify-content-center vh-100"
-        style="background-image: url('https://img.lovepik.com/photo/45013/6044.jpg_wh860.jpg'); height: 10vh; width: 200vh; background-size: cover; background-position: center; background-repeat: no-repeat;">
-        <div class="container-fluid mt-5">
+    <div class="d-flex align-items-center justify-content-center">
+        <div class="container">
             <div class="row row-cols-lg-2">
                 <div class="col mx-auto">
                     <div class="card">
                         <div class="card-body">
                             <div class="card">
                                 <div class="card-body">
-                                    <h3 class="text-center mb-5 mt-4"><b>Đăng Nhập SHOPQA</b></h3>
+                                    <h3 class="text-center mb-5"><b>Đăng Nhập SHOPQA</b></h3>
                                     <label for="">Email</label>
                                     <div class="input-group  mt-2 mb-2"> <span class="input-group-text"><i
                                                 class="fa-solid fa-envelope"></i></span>
