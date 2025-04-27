@@ -143,12 +143,12 @@ export default {
         return {
             create: {
                 'ten_danh_muc': "",
-                'tinh_trang': "",
+                'tinh_trang': 1,
                 'mo_ta': "",
             },
             edit: {
                 'ten_danh_muc': "",
-                'tinh_trang': "",
+                'tinh_trang': 1,
                 'mo_ta': "",
             },
             del: {
@@ -164,7 +164,11 @@ export default {
     methods: {
         doiTrangThai(value) {
             axios
-                .post("http://127.0.0.1:8000/api/admin/danh-muc/change-status", value)
+                .post("http://127.0.0.1:8000/api/admin/danh-muc/change-status", value, {
+                    headers: {
+                       Authorization: 'Bearer ' + localStorage.getItem('nhan_vien_login')
+                    }
+                })
                 .then((res) => {
                     if (res.data.status) {
                         this.$toast.success(res.data.message);
@@ -180,7 +184,11 @@ export default {
                 return;
             }
             axios
-                .post("http://127.0.0.1:8000/api/admin/danh-muc/search", this.search)
+                .post("http://127.0.0.1:8000/api/admin/danh-muc/search", this.search, {
+                    headers: {
+                       Authorization: 'Bearer ' + localStorage.getItem('nhan_vien_login')
+                    }
+                })
                 .then((res) => {
                     this.list = res.data.data;
                 })
@@ -194,7 +202,11 @@ export default {
         },
         xoa() {
             axios
-                .post("http://127.0.0.1:8000/api/admin/danh-muc/delete", this.del)
+                .post("http://127.0.0.1:8000/api/admin/danh-muc/delete", this.del, {
+                    headers: {
+                       Authorization: 'Bearer ' + localStorage.getItem('nhan_vien_login')
+                    }
+                })
                 .then((res) => {
                     if (res.data.status) {
                         this.$toast.success(res.data.message);
@@ -212,7 +224,11 @@ export default {
         },
         capNhat() {
             axios
-                .post("http://127.0.0.1:8000/api/admin/danh-muc/update", this.edit)
+                .post("http://127.0.0.1:8000/api/admin/danh-muc/update", this.edit, {
+                    headers: {
+                       Authorization: 'Bearer ' + localStorage.getItem('nhan_vien_login')
+                    }
+                })
                 .then((res) => {
                     if (res.data.status) {
                         this.$toast.success(res.data.message);
@@ -234,7 +250,11 @@ export default {
         },
         themMoi() {
             axios
-                .post("http://127.0.0.1:8000/api/admin/danh-muc/create", this.create)
+                .post("http://127.0.0.1:8000/api/admin/danh-muc/create", this.create, {
+                    headers: {
+                       Authorization: 'Bearer ' + localStorage.getItem('nhan_vien_login')
+                    }
+                })
                 .then((res) => {
                     if ((res.data.status)) {
                         this.$toast.success(res.data.message);
@@ -256,7 +276,11 @@ export default {
         },
         loadData() {
             axios
-                .get("http://127.0.0.1:8000/api/admin/danh-muc/data")
+                .get("http://127.0.0.1:8000/api/admin/danh-muc/data", {
+                    headers: {
+                       Authorization: 'Bearer ' + localStorage.getItem('nhan_vien_login')
+                    }
+                })
                 .then((res) => {
                     this.list = res.data.data;
                 })

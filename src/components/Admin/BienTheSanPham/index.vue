@@ -269,7 +269,11 @@ export default {
                 return;
             }
             axios
-                .post("http://127.0.0.1:8000/api/admin/bien-the-san-pham/search", this.search)
+                .post("http://127.0.0.1:8000/api/admin/bien-the-san-pham/search", this.search, {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                    }
+                })
                 .then((res) => {
                     this.list = res.data.data;
                 })
@@ -283,7 +287,11 @@ export default {
         },
         doiTrangThai(value) {
             axios
-                .post("http://127.0.0.1:8000/api/admin/bien-the-san-pham/change-status", value)
+                .post("http://127.0.0.1:8000/api/admin/bien-the-san-pham/change-status", value, {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                    }
+                })
                 .then((res) => {
                     if (res.data.status) {
                         this.$toast.success(res.data.message);
@@ -296,7 +304,11 @@ export default {
         },
         capNhat() {
             axios
-                .post("http://127.0.0.1:8000/api/admin/bien-the-san-pham/update", this.edit)
+                .post("http://127.0.0.1:8000/api/admin/bien-the-san-pham/update", this.edit, {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                    }
+                })
                 .then((res) => {
                     if (res.data.status) {
                         this.$toast.success(res.data.message);
@@ -323,7 +335,11 @@ export default {
         },
         themMoi() {
             axios
-                .post("http://127.0.0.1:8000/api/admin/bien-the-san-pham/create", this.create)
+                .post("http://127.0.0.1:8000/api/admin/bien-the-san-pham/create", this.create, {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                    }
+                })
                 .then((res) => {
                     if (res.data.status) {
                         this.$toast.success(res.data.message);
@@ -350,7 +366,11 @@ export default {
         },
         xoa() {
             axios
-                .post("http://127.0.0.1:8000/api/admin/bien-the-san-pham/delete", this.del)
+                .post("http://127.0.0.1:8000/api/admin/bien-the-san-pham/delete", this.del, {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                    }
+                })
                 .then((res) => {
                     if (res.data.status) {
                         this.$toast.success(res.data.message);
@@ -363,14 +383,22 @@ export default {
         },
         loadDataSanPham() {
             axios
-                .get("http://127.0.0.1:8000/api/admin/san-pham/data")
+                .get("http://127.0.0.1:8000/api/admin/san-pham/data", {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                    }
+                })
                 .then((res) => {
                     this.list_San_Pham = res.data.data;
                 })
         },
         loadData() {
             axios
-                .get("http://127.0.0.1:8000/api/admin/bien-the-san-pham/data")
+                .get("http://127.0.0.1:8000/api/admin/bien-the-san-pham/data", {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                    }
+                })
                 .then((res) => {
                     this.list = res.data.data;
                 })

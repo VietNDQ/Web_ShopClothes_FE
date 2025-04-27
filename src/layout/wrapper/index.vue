@@ -1,21 +1,23 @@
 <template>
     <div class="wrapper">
-		<div class="header-wrapper">
-            <TopRocker></TopRocker>
-            <MenuRocker></MenuRocker>
-		</div>
-		<div class="page-wrapper">
-			<div class="page-content">
+        <div class="header-wrapper">
+            <div class="container">
+                <TopAdmin></TopAdmin>
+                <MenuAdmin></MenuAdmin>
+            </div>
+        </div>
+        <div class="page-wrapper ">
+            <div class="page-content container">
                 <router-view> </router-view>
             </div>
-		</div>
-        <BotRocker></BotRocker>
-	</div>
+        </div>
+        <BotAdmin></BotAdmin>
+    </div>
 </template>
 <script>
-import TopRocker from "../components/TopRocker.vue";
-import BotRocker from "../components/BotRocker.vue";
-import MenuRocker from "../components/MenuRocker.vue";
+import TopAdmin from "../components/TopAdmin.vue";
+import BotAdmin from "../components/BotAdmin.vue";
+import MenuAdmin from "../components/MenuAdmin.vue";
 import "../../assets/js/bootstrap.bundle.min.js";
 import "../../assets/js/jquery.min.js";
 import "../../assets/plugins/simplebar/js/simplebar.min.js";
@@ -25,9 +27,9 @@ import "../../assets/js/index.js";
 import "../../assets/js/app.js";
 import "../../assets/js/pace.min.js";
 export default {
-    name        :   "app",
-    components  :   {
-        TopRocker, MenuRocker, BotRocker
+    name: "app",
+    components: {
+        TopAdmin, MenuAdmin, BotAdmin
     }
 }
 </script>
@@ -46,5 +48,3 @@ export default {
 @import "../../assets/css/header-colors.css";
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css");
 </style>
-
-

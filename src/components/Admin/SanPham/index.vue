@@ -7,12 +7,12 @@
                         <h3>Danh Sách Sản Phẩm</h3>
                         <button type="button" class="btn btn-primary radius-30" data-bs-toggle="modal"
                             data-bs-target="#themMoi">
-                            <i class="fa-solid fa-plus fa-spin"></i>Thêm Mới Sản Phẩm
+                            <i class="fa-solid fa-square-plus fa-spin"></i>Thêm Mới Sản Phẩm
                         </button>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-hover">
+                            <table class="table table-bordered table-hover table-sm">
                                 <thead class="table-secondary text-center">
                                     <tr>
                                         <th colspan="100%">
@@ -33,15 +33,15 @@
                                     <tr>
                                         <th>STT</th>
                                         <th>Tên Sản Phẩm</th>
-                                        <th>Tên Thương Hiệu</th>
-                                        <th>Tên Danh Mục</th>
+                                        <th>Thương Hiệu</th>
+                                        <th>Danh Mục</th>
                                         <th>Giá Gốc(VND)</th>
                                         <th>Giá Bán(VND)</th>
                                         <th>Giám Giá(%)</th>
                                         <th>Hình Ảnh</th>
                                         <th class="text-nowrap" style="width: 10%;">
                                             <i @click="up()" class="fa-solid fa-up-long text-danger fa-lg"></i>
-                                            Tổng Số Lượng Tồn
+                                            Số Lượng Tồn
                                             <i @click="down()" class="fa-solid fa-down-long text-primary fa-lg"></i>
                                         </th>
                                         <th>Tình Trạng</th>
@@ -64,7 +64,8 @@
                                                     {{ value.giam_gia }}%
                                                 </span></td>
                                             <td class="align-middle text-center">
-                                                <img :src="value.hinh_anh" class="img-fluid" alt="Rolex Submariner" />
+                                                <img :src="value.hinh_anh" class="img-fluid" style="height: 90%;"
+                                                    alt="Rolex Submariner" />
                                             </td>
                                             <td class="align-middle text-center">{{ value.TONG_SL_TON }}</td>
                                             <td class="align-middle text-center">
@@ -169,11 +170,6 @@
                             </div>
                             <div class="row mt-2">
                                 <div class="col-lg-6 col-md-auto">
-                                    <label for="">Hình Ảnh</label>
-                                    <input v-model="create.hinh_anh" type="text" step="2" class="form-control mt-2 mb-2"
-                                        name="" />
-                                </div>
-                                <div class="col-lg-6 col-md-auto">
                                     <label for="">Giá Sản Phẩm(VNĐ)</label>
                                     <input v-model="create.gia_goc" type="number" step="2"
                                         class="form-control mt-2 mb-2" />
@@ -240,28 +236,26 @@
                             <div class="row mt-2">
                                 <div class="col-lg-6 col-md-auto">
                                     <label for="">Tên Thương Hiệu</label>
-                                    <select v-model="edit.ten_thuong_hieu" name="" id="" class="form-control mt-2 mb-2">
+                                    <select v-model="edit.id_thuong_hieu" class="form-control mt-2 mb-2">
+                                        <option disabled value="">-- Chọn thương hiệu --</option>
                                         <template v-for="(value, index) in list_thuong_hieu" :key="index">
-                                            <option v-bind:value="value.id">{{ value.ten_thuong_hieu }}</option>
-                                        </template>
-                                    </select>
-                                </div>
-                                <div class="col-lg-6 col-md-auto">
-                                    <label for="">Tên Danh Mục</label>
-                                    <select v-model="edit.ten_danh_muc" name="" id="" class="form-control mt-2 mb-2">
-                                        <template v-for="(value, index) in list_danh_muc" :key="index">
-                                            <option v-bind:value="value.id">{{ value.ten_danh_muc }}</option>
+                                            <option :value="value.id">{{ value.ten_thuong_hieu }}</option>
                                         </template>
                                     </select>
                                 </div>
 
-                            </div>
-                            <div class="row mt-2">
                                 <div class="col-lg-6 col-md-auto">
-                                    <label for="">Hinh Ảnh</label>
-                                    <input v-model="edit.hinh_anh" type="text" step="2" class="form-control mt-2 mb-2"
-                                        name="" />
+                                    <label for="">Tên Danh Mục</label>
+                                    <select v-model="edit.id_danh_muc" class="form-control mt-2 mb-2">
+                                        <option disabled value="">-- Chọn danh mục --</option>
+                                        <template v-for="(value, index) in list_danh_muc" :key="index">
+                                            <option :value="value.id">{{ value.ten_danh_muc }}</option>
+                                        </template>
+                                    </select>
                                 </div>
+                            </div>
+
+                            <div class="row mt-2">
                                 <div class="col-lg-6 col-md-auto">
                                     <label for="">Giá Sản Phẩm(VNĐ)</label>
                                     <input v-model="edit.gia_goc" type="number" step="2"
@@ -272,7 +266,7 @@
                             <div class="row mt-2">
                                 <div class="col-lg-6">
                                     <label for="">Giảm Giá(%)</label>
-                                    <input v-model="edit.giam_gia" type="text" class="form-control">
+                                    <input v-model="edit.giam_gia" type="text" class="form-control mt-2 mb-2">
                                 </div>
                                 <div class="col-lg-6">
                                     <label for="">Tình Trạng</label>
@@ -339,30 +333,28 @@ export default {
     data() {
         return {
             del: {
-                'id': "",
-                'ten_san_pham': "",
+                id: "",
+                ten_san_pham: "",
             },
             create: {
-                'id_thuong_hieu': "",
-                'id_danh_muc': "",
-                'ten_san_pham': "",
-                'slug_san_pham': "",
-                'gia_goc': "",
-                'giam_gia': "",
-                'hinh_anh': "",
-                'mo_ta': "",
-                'tinh_trang': "",
+                id_thuong_hieu: "",
+                id_danh_muc: "",
+                ten_san_pham: "",
+                slug_san_pham: "",
+                gia_goc: "",
+                giam_gia: "",
+                mo_ta: "",
+                tinh_trang: 1,
             },
             edit: {
-                'id_thuong_hieu': "",
-                'id_danh_muc': "",
-                'ten_san_pham': "",
-                'slug_san_pham': "",
-                'gia_goc': "",
-                'giam_gia': "",
-                'hinh_anh': "",
-                'mo_ta': "",
-                'tinh_trang': "",
+                id_thuong_hieu: "",
+                id_danh_muc: "",
+                ten_san_pham: "",
+                slug_san_pham: "",
+                gia_goc: "",
+                giam_gia: "",
+                mo_ta: "",
+                tinh_trang: 1,
             },
             list: [],
             list_thuong_hieu: [],
@@ -386,7 +378,11 @@ export default {
                 return;
             }
             axios
-                .post("http://127.0.0.1:8000/api/admin/san-pham/search", this.search)
+                .post("http://127.0.0.1:8000/api/admin/san-pham/search", this.search, {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                    }
+                })
                 .then((res) => {
                     this.list = res.data.data;
                 })
@@ -400,21 +396,33 @@ export default {
         },
         doiTrangThai(value) {
             axios
-                .post("http://127.0.0.1:8000/api/admin/san-pham/change-status", value)
+                .post("http://127.0.0.1:8000/api/admin/san-pham/change-status", value, {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                    }
+                })
                 .then((res) => {
                     if (res.data.status) {
                         this.$toast.success(res.data.message);
                         this.loadData();
-                        this.loadDataDanhMuc();
-                        this.loadDataThuongHieu();
                     } else {
                         this.$toast.error(res.data.message);
                     }
+                })
+                .catch((res) => {
+                    const list = Object.values(res.response.data.errors);
+                    list.forEach((v, i) => {
+                        this.$toast.error(v[0]);
+                    });
                 })
         },
         xoa() {
             axios
-                .post("http://127.0.0.1:8000/api/admin/san-pham/delete", this.del)
+                .post("http://127.0.0.1:8000/api/admin/san-pham/delete", this.del, {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                    }
+                })
                 .then((res) => {
                     if (res.data.status) {
                         this.$toast.success(res.data.message);
@@ -425,27 +433,26 @@ export default {
                         this.$toast.error(res.data.message);
                     }
                 })
+                .catch((res) => {
+                    const list = Object.values(res.response.data.errors);
+                    list.forEach((v, i) => {
+                        this.$toast.error(v[0]);
+                    });
+                })
         },
         capNhat() {
             axios
-                .post("http://127.0.0.1:8000/api/admin/san-pham/update", this.edit)
+                .post("http://127.0.0.1:8000/api/admin/san-pham/update", this.edit, {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                    }
+                })
                 .then((res) => {
                     if (res.data.status) {
                         this.$toast.success(res.data.message);
                         this.loadData();
                         this.loadDataDanhMuc();
                         this.loadDataThuongHieu();
-                        this.edit = {
-                            'id_thuong_hieu': "",
-                            'id_danh_muc': "",
-                            'ten_san_pham': "",
-                            'slug_san_pham': "",
-                            'gia_goc': "",
-                            'giam_gia': "",
-                            'hinh_anh': "",
-                            'mo_ta': "",
-                            'tinh_trang': "",
-                        }
                     } else {
                         this.$toast.error(res.data.message);
                     }
@@ -459,7 +466,11 @@ export default {
         },
         themMoi() {
             axios
-                .post("http://127.0.0.1:8000/api/admin/san-pham/create", this.create)
+                .post("http://127.0.0.1:8000/api/admin/san-pham/create", this.create, {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                    }
+                })
                 .then((res) => {
                     if (res.data.status) {
                         this.$toast.success(res.data.message);
@@ -471,10 +482,8 @@ export default {
                             'slug_san_pham': "",
                             'gia_goc': "",
                             'giam_gia': "",
-
-                            'hinh_anh': "",
                             'mo_ta': "",
-                            'tinh_trang': "",
+                            'tinh_trang': 1,
                         }
                     } else {
                         this.$toast.error(res.data.message);
@@ -489,16 +498,36 @@ export default {
         },
         loadDataDanhMuc() {
             axios
-                .get("http://127.0.0.1:8000/api/admin/danh-muc/data-open")
+                .get("http://127.0.0.1:8000/api/admin/danh-muc/data-open", {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                    }
+                })
                 .then((res) => {
                     this.list_danh_muc = res.data.data;
+                })
+                .catch((res) => {
+                    const list = Object.values(res.response.data.errors);
+                    list.forEach((v, i) => {
+                        this.$toast.error(v[0]);
+                    });
                 })
         },
         loadDataThuongHieu() {
             axios
-                .get("http://127.0.0.1:8000/api/admin/thuong-hieu/data-open")
+                .get("http://127.0.0.1:8000/api/admin/thuong-hieu/data-open", {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                    }
+                })
                 .then((res) => {
                     this.list_thuong_hieu = res.data.data;
+                })
+                .catch((res) => {
+                    const list = Object.values(res.response.data.errors);
+                    list.forEach((v, i) => {
+                        this.$toast.error(v[0]);
+                    });
                 })
         },
         up() {
@@ -512,9 +541,19 @@ export default {
 
         loadData() {
             axios
-                .get("http://127.0.0.1:8000/api/admin/san-pham/data")
+                .get("http://127.0.0.1:8000/api/admin/san-pham/data", {
+                    headers: {
+                        Authorization: 'Bearer ' + localStorage.getItem('nhan_vien_login')
+                    }
+                })
                 .then((res) => {
                     this.list = res.data.data;
+                })
+                .catch((res) => {
+                    const list = Object.values(res.response.data.errors);
+                    list.forEach((v, i) => {
+                        this.$toast.error(v[0]);
+                    });
                 })
         },
         formatVND(number) {
@@ -527,4 +566,3 @@ export default {
 }
 </script>
 <style></style>
-x`x`

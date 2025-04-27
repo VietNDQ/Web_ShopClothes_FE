@@ -1,16 +1,16 @@
 <template>
     <div class="wrapper">
-		<div class="header-wrapper">
+        <div class="header-wrapper">
             <TopClient></TopClient>
             <MenuClient></MenuClient>
-		</div>
-		<div class="page-wrapper">
-			<div class="page-content">
+        </div>
+        <div class="page-wrapper">
+            <div class="page-content container">
                 <router-view> </router-view>
             </div>
-		</div>
+        </div>
         <BotClient></BotClient>
-	</div>
+    </div>
 </template>
 <script>
 import TopClient from "../components/TopClient.vue";
@@ -25,9 +25,9 @@ import "../../assets/js/index.js";
 import "../../assets/js/app.js";
 import "../../assets/js/pace.min.js";
 export default {
-    name        :   "app",
-    components  :   {
-        TopClient, MenuClient,BotClient
+    name: "app",
+    components: {
+        TopClient, MenuClient, BotClient
     }
 }
 </script>

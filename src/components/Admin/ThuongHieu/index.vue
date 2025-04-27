@@ -1,4 +1,5 @@
 <template>
+   <div class="container">
     <div class="row">
         <div class="col-lg-4 col-lg-md-12">
             <div class="card">
@@ -77,6 +78,7 @@
             </div>
         </div>
     </div>
+   </div>
     <!-- Modal Cập Nhập-->
     <div class="modal fade" id="update" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -145,12 +147,12 @@ export default {
         return {
             create: {
                 'ten_thuong_hieu': "",
-                'tinh_trang': "",
+                'tinh_trang': 1,
                 'mo_ta': "",
             },
             edit: {
                 'ten_thuong_hieu': "",
-                'tinh_trang': "",
+                'tinh_trang': 1,
                 'mo_ta': "",
             },
             del: {
@@ -166,7 +168,11 @@ export default {
     methods: {
         doiTrangThai(value) {
             axios
-                .post("http://127.0.0.1:8000/api/admin/thuong-hieu/change-status", value)
+                .post("http://127.0.0.1:8000/api/admin/thuong-hieu/change-status", value, {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                    }
+                })
                 .then((res) => {
                     if (res.data.status) {
                         this.$toast.success(res.data.message);
@@ -175,6 +181,12 @@ export default {
                         this.$toast.error(res.data.message);
                     }
                 })
+                .catch((res) => {
+                    const list = Object.values(res.response.data.errors);
+                    list.forEach((v, i) => {
+                        this.$toast.error(v[0]);
+                    });
+                })
         },
         timKiem() {
             if (this.search.ten_thuong_hieu == "") {
@@ -182,7 +194,11 @@ export default {
                 return;
             }
             axios
-                .post("http://127.0.0.1:8000/api/admin/thuong-hieu/search", this.search)
+                .post("http://127.0.0.1:8000/api/admin/thuong-hieu/search", this.search, {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                    }
+                })
                 .then((res) => {
                     this.list = res.data.data;
                 })
@@ -196,7 +212,11 @@ export default {
         },
         xoa() {
             axios
-                .post("http://127.0.0.1:8000/api/admin/thuong-hieu/delete", this.del)
+                .post("http://127.0.0.1:8000/api/admin/thuong-hieu/delete", this.del, {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                    }
+                })
                 .then((res) => {
                     if (res.data.status) {
                         this.$toast.success(res.data.message);
@@ -214,7 +234,11 @@ export default {
         },
         capNhap() {
             axios
-                .post("http://127.0.0.1:8000/api/admin/thuong-hieu/update", this.edit)
+                .post("http://127.0.0.1:8000/api/admin/thuong-hieu/update", this.edit, {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                    }
+                })
                 .then((res) => {
                     if (res.data.status) {
                         this.$toast.success(res.data.message);
@@ -236,7 +260,11 @@ export default {
         },
         themMoi() {
             axios
-                .post("http://127.0.0.1:8000/api/admin/thuong-hieu/create", this.create)
+                .post("http://127.0.0.1:8000/api/admin/thuong-hieu/create", this.create, {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                    }
+                })
                 .then((res) => {
                     if ((res.data.status)) {
                         this.$toast.success(res.data.message);
@@ -258,7 +286,11 @@ export default {
         },
         loadData() {
             axios
-                .get("http://127.0.0.1:8000/api/admin/thuong-hieu/data")
+                .get("http://127.0.0.1:8000/api/admin/thuong-hieu/data", {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                    }
+                })
                 .then((res) => {
                     this.list = res.data.data;
                 })

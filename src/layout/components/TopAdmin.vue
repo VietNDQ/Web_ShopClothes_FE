@@ -1,6 +1,7 @@
 <template>
     <header>
         <div class="topbar d-flex align-items-center">
+      <div class="container">
             <nav class="navbar navbar-expand">
                 <div class="topbar-logo-header">
                     <div class="">
@@ -387,19 +388,7 @@
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item" href="javascript:;"><i
                                     class="bx bx-user"></i><span>Profile</span></a>
-                        </li>
-                        <li><a class="dropdown-item" href="javascript:;"><i
-                                    class="bx bx-cog"></i><span>Settings</span></a>
-                        </li>
-                        <li><a class="dropdown-item" href="javascript:;"><i
-                                    class='bx bx-home-circle'></i><span>Dashboard</span></a>
-                        </li>
-                        <li><a class="dropdown-item" href="javascript:;"><i
-                                    class='bx bx-dollar-circle'></i><span>Earnings</span></a>
-                        </li>
-                        <li><a class="dropdown-item" href="javascript:;"><i
-                                    class='bx bx-download'></i><span>Downloads</span></a>
-                        </li>
+                        </li>            
                         <li>
                             <div class="dropdown-divider mb-0"></div>
                         </li>
@@ -410,6 +399,7 @@
                 </div>
             </nav>
         </div>
+      </div>
     </header>
 </template>
 <script>

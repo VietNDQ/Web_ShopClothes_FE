@@ -1,6 +1,5 @@
 <template>
-    <div class="d-flex align-items-center justify-content-center vh-100"
-        style="background-image: url('https://img.lovepik.com/photo/45013/6044.jpg_wh860.jpg'); height: 10vh; width: 200vh; background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <div class="d-flex align-items-center justify-content-center vh-100">
         <div class="container mt-5">
             <div class="row justify-content-center">
                 <div class="col-md-6">
