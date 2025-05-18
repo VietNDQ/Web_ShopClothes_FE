@@ -227,29 +227,4 @@ export default {
 }
 </script>
 
-<style>
-.ellipsis {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.dropdown-center {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-center:hover .dropdown-menu {
-    display: block;
-    margin-top: 0;
-}
-
-.dropdown-menu {
-    display: none;
-    position: absolute;
-    background: white;
-    min-width: 150px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-}
-</style>
+<style></style>

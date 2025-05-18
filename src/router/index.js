@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router"; // cài vue-router:
 import checkNhanVienLogin from "./checkNhanVienLogin";
 const routes = [
   {
-    path: "/trang-chu",
+    path: "/",
     component: () => import("../components/Client/TrangChu/index.vue"),
     meta: { layout: "client" },
   },
@@ -18,6 +18,12 @@ const routes = [
   },
 
   //Admin
+  {
+    path: "/admin/quan-ly-don-hang",
+    component: () => import("../components/Admin/QuanLyDonHang/index.vue"),
+    meta: { layout: "default" },
+    beforeEnter: checkNhanVienLogin,
+  },
   {
     path: "/admin/nhan-vien",
     component: () => import("../components/Admin/NhanVien/index.vue"),
@@ -65,7 +71,12 @@ const routes = [
     meta: { layout: "default" },
     beforeEnter: checkNhanVienLogin,
   },
-  //Sign
+  {
+    path: "/admin/phan-quyen",
+    component: () => import("../components/Admin/PhanQuyen/index.vue"),
+    meta: { layout: "default" },
+  },
+  //Sign khach hang
   {
     path: "/khach-hang/dang-nhap",
     component: () => import("../components/KhachHang/DangNhap/index.vue"),
@@ -80,6 +91,11 @@ const routes = [
     path: "/khach-hang/quen-mat-khau",
     component: () => import("../components/KhachHang/QuenMatKhau/index.vue"),
     meta: { layout: "blank" },
+  },
+  {
+    path: "/khach-hang/profile",
+    component: () => import("../components/KhachHang/Profile/index.vue"),
+    meta: { layout: "client" },
   },
   
 ]

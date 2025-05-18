@@ -61,27 +61,33 @@ export default {
         }
     },
     methods: {
-    Login() {
-        axios
-            .post("http://127.0.0.1:8000/api/admin/dang-nhap", this.user)
-            .then((res) => {
-                if (res.data.status) {
-                    localStorage.setItem('nhan_vien_login', res.data.token); // Lưu token vào localStorage
-                    this.$toast.success(res.data.message);
-                    this.$router.push('/admin/san-pham'); // Chuyển hướng tới trang sản phẩm
-                } else {
-                    this.$toast.error(res.data.message); // Hiển thị thông báo lỗi
-                }
-            })
-            .catch((error) => {
-                console.log(error.response); // In toàn bộ phản hồi lỗi từ server
-                const list = Object.values(error.response?.data?.errors || { error: ['Đã xảy ra lỗi không xác định'] });
-                list.forEach((v) => {
-                    this.$toast.error(v[0]); // Hiển thị các lỗi
+        Login() {
+            axios
+                .post("http://127.0.0.1:8000/api/admin/dang-nhap", this.user)
+                .then((res) => {
+                    if (res.data.status) {
+                        localStorage.setItem("nhan_vien_login", res.data.token);
+                        localStorage.setItem("ho_ten_nhan_vien", res.data.name);
+                        localStorage.setItem("email_nhan_vien", res.data.email);
+                        localStorage.setItem("ten_chuc_vu", res.data.chuc_vu);
+                        localStorage.setItem("check_nhan_vien", 1);
+                        this.$toast.success(res.data.message);
+                        this.$router.push('/admin/san-pham').then(() => {
+                            location.reload(); // Tải lại trang để dữ liệu từ localStorage cập nhật vào header
+                        });
+                    } else {
+                        this.$toast.error(res.data.message);
+                    }
+                })
+                .catch((error) => {
+                    console.log(error.response);
+                    const list = Object.values(error.response?.data?.errors || { error: ['Đã xảy ra lỗi không xác định'] });
+                    list.forEach((v) => {
+                        this.$toast.error(v[0]);
+                    });
                 });
-            });
+        }
     }
-}
 
 }
 </script>

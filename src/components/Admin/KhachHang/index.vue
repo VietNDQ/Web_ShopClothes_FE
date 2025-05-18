@@ -156,7 +156,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/khach-hang/search", this.search, {
                     headers: {
-                       Authorization: 'Bearer' + localStorage.getItem('nhan_vien_login')
+                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
                     }
                 })
                 .then((res) => {
@@ -174,10 +174,10 @@ export default {
             axios
                 .post(
                     "http://127.0.0.1:8000/api/admin/khach-hang/change-status",value, {
-                    headers: {
-                       Authorization: 'Bearer' + localStorage.getItem('nhan_vien_login')
-                    }
-                })
+                        headers: {
+                            Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                        }
+                    })
                 .then((res) => {
                     if (res.data.status) {
                         this.loadData();
@@ -198,7 +198,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/khach-hang/delete", this.del, {
                     headers: {
-                       Authorization: 'Bearer' + localStorage.getItem('nhan_vien_login')
+                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
                     }
                 })
                 .then((res) => {
@@ -220,7 +220,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/khach-hang/update", this.edit, {
                     headers: {
-                       Authorization: 'Bearer' + localStorage.getItem('nhan_vien_login')
+                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
                     }
                 })
                 .then((res) => {
@@ -242,7 +242,7 @@ export default {
             axios
                 .get("http://127.0.0.1:8000/api/admin/khach-hang/data", {
                     headers: {
-                       Authorization: 'Bearer' + localStorage.getItem('nhan_vien_login')
+                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
                     }
                 })
                 .then((res)=>{

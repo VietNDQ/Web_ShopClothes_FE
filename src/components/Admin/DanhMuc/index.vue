@@ -50,12 +50,15 @@
                                     <tr>
                                         <th class="text-center align-middle">{{ index + 1 }}</th>
                                         <td class="text-center align-middle">{{ value.ten_danh_muc }}</td>
-                                        <td class="align-middle wrap-text">{{ value.mo_ta }}</td>
+                                        <td class="align-middle wrap-text"
+                                            style="max-width: 292px; word-wrap: break-word; white-space: normal;">
+                                            {{ value.mo_ta }}
+                                        </td>
                                         <td class="align-middle text-center">
-                                                <button v-on:click="doiTrangThai(value)" v-if="value.tinh_trang == 1"
-                                                    class="btn btn-success btn-sm">Còn Hàng</button>
-                                                <button v-on:click="doiTrangThai(value)" v-else
-                                                    class="btn btn-warning btn-sm">Hết Hàng</button>
+                                            <button v-on:click="doiTrangThai(value)" v-if="value.tinh_trang == 1"
+                                                class="btn btn-success btn-sm">Còn Hàng</button>
+                                            <button v-on:click="doiTrangThai(value)" v-else
+                                                class="btn btn-warning btn-sm">Hết Hàng</button>
                                         </td>
                                         <td class="text-center align-middle" style="width: 20%;">
                                             <button v-on:click="Object.assign(edit, value)"
@@ -166,7 +169,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/danh-muc/change-status", value, {
                     headers: {
-                       Authorization: 'Bearer ' + localStorage.getItem('nhan_vien_login')
+                        Authorization: 'Bearer ' + localStorage.getItem('nhan_vien_login')
                     }
                 })
                 .then((res) => {
@@ -186,7 +189,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/danh-muc/search", this.search, {
                     headers: {
-                       Authorization: 'Bearer ' + localStorage.getItem('nhan_vien_login')
+                        Authorization: 'Bearer ' + localStorage.getItem('nhan_vien_login')
                     }
                 })
                 .then((res) => {
@@ -204,7 +207,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/danh-muc/delete", this.del, {
                     headers: {
-                       Authorization: 'Bearer ' + localStorage.getItem('nhan_vien_login')
+                        Authorization: 'Bearer ' + localStorage.getItem('nhan_vien_login')
                     }
                 })
                 .then((res) => {
@@ -226,7 +229,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/danh-muc/update", this.edit, {
                     headers: {
-                       Authorization: 'Bearer ' + localStorage.getItem('nhan_vien_login')
+                        Authorization: 'Bearer ' + localStorage.getItem('nhan_vien_login')
                     }
                 })
                 .then((res) => {
@@ -252,7 +255,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/danh-muc/create", this.create, {
                     headers: {
-                       Authorization: 'Bearer ' + localStorage.getItem('nhan_vien_login')
+                        Authorization: 'Bearer ' + localStorage.getItem('nhan_vien_login')
                     }
                 })
                 .then((res) => {
@@ -278,7 +281,7 @@ export default {
             axios
                 .get("http://127.0.0.1:8000/api/admin/danh-muc/data", {
                     headers: {
-                       Authorization: 'Bearer ' + localStorage.getItem('nhan_vien_login')
+                        Authorization: 'Bearer ' + localStorage.getItem('nhan_vien_login')
                     }
                 })
                 .then((res) => {
@@ -289,11 +292,4 @@ export default {
 }
 </script>
 <style>
-.wrap-text {
-    max-width: 292px;
-    /* Điều chỉnh độ rộng theo ý bạn */
-    word-wrap: break-word;
-    /* Hoặc overflow-wrap: break-word; */
-    white-space: normal;
-}
 </style>

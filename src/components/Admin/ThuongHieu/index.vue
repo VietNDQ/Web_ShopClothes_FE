@@ -1,84 +1,88 @@
 <template>
-   <div class="container">
-    <div class="row">
-        <div class="col-lg-4 col-lg-md-12">
-            <div class="card">
-                <div class="card-header mt-2">
-                    <h4>Thông Tin Thương Hiệu</h4>
-                </div>
-                <div class="card-body">
-                    <label for="">Tên Thương Hiệu</label>
-                    <input v-model="create.ten_thuong_hieu" type="text" class="form-control mt-2 mb-2"
-                        placeholder="Nhập tên Thương Hiệu">
-                    <label for="">Tình Trạng</label>
-                    <select v-model="create.tinh_trang" class="form-control mt-2 mb-2" name="" id="">
-                        <option value="1">Còn Hàng</option>
-                        <option value="0">Hết Hàng</option>
-                    </select>
-                    <label for="">Mô tả</label>
-                    <textarea v-model="create.mo_ta" class="form-control mt-2 mb-2" rows="3"
-                        placeholder="Nhập mô tả Thương Hiệu..."></textarea>
-                </div>
-                <div class="card-footer">
-                    <button @click="themMoi()" class="btn btn-danger w-100"><i class="fa-solid fa-plus fa-xs"></i> Thêm
-                        Thương Hiệu</button>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-lg-md-12">
+                <div class="card">
+                    <div class="card-header mt-2">
+                        <h4>Thông Tin Thương Hiệu</h4>
+                    </div>
+                    <div class="card-body">
+                        <label for="">Tên Thương Hiệu</label>
+                        <input v-model="create.ten_thuong_hieu" type="text" class="form-control mt-2 mb-2"
+                            placeholder="Nhập tên Thương Hiệu">
+                        <label for="">Tình Trạng</label>
+                        <select v-model="create.tinh_trang" class="form-control mt-2 mb-2" name="" id="">
+                            <option value="1">Còn Hàng</option>
+                            <option value="0">Hết Hàng</option>
+                        </select>
+                        <label for="">Mô tả</label>
+                        <textarea v-model="create.mo_ta" class="form-control mt-2 mb-2" rows="3"
+                            placeholder="Nhập mô tả Thương Hiệu..."></textarea>
+                    </div>
+                    <div class="card-footer">
+                        <button @click="themMoi()" class="btn btn-danger w-100"><i class="fa-solid fa-plus fa-xs"></i>
+                            Thêm
+                            Thương Hiệu</button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-8 col-lg-md-12">
-            <div class="card">
-                <div class="card-header text-center mt-2">
-                    <h4>Danh Sách Thương Hiệu</h4>
-                </div>
-                <div class="card-body">
-                    <div class="input-group">
-                        <input v-on:keyup.enter="timKiem()" v-model="search.noi_dung" type="text"
-                            class="form-control search-control" placeholder="Type to search...">
-                        <button @click="timKiem()" class="btn btn-success">Tìm kiếm</button>
+            <div class="col-lg-8 col-lg-md-12">
+                <div class="card">
+                    <div class="card-header text-center mt-2">
+                        <h4>Danh Sách Thương Hiệu</h4>
                     </div>
-                    <div class="table-responsive mt-2">
-                        <table class="table table-bordered table-hover">
-                            <thead class="table-primary text-center">
-                                <tr>
-                                    <th>#</th>
-                                    <th>Tên Thương Hiệu</th>
-                                    <th>Mô Tả</th>
-                                    <th>Tình Trạng</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <template v-for="(value, index) in list" :key="index">
+                    <div class="card-body">
+                        <div class="input-group">
+                            <input v-on:keyup.enter="timKiem()" v-model="search.noi_dung" type="text"
+                                class="form-control search-control" placeholder="Type to search...">
+                            <button @click="timKiem()" class="btn btn-success">Tìm kiếm</button>
+                        </div>
+                        <div class="table-responsive mt-2">
+                            <table class="table table-bordered table-hover">
+                                <thead class="table-primary text-center">
                                     <tr>
-                                        <th class="text-center align-middle">{{ index + 1 }}</th>
-                                        <td class="text-center align-middle">{{ value.ten_thuong_hieu }}</td>
-                                        <td class="align-middle wrap-text">{{ value.mo_ta }}</td>
-                                        <td class="align-middle text-center">
-                                            <button v-on:click="doiTrangThai(value)" v-if="value.tinh_trang == 1"
-                                                class="btn btn-success btn-sm">Còn Hàng</button>
-                                            <button v-on:click="doiTrangThai(value)" v-else
-                                                class="btn btn-warning btn-sm">Hết Hàng</button>
-                                        </td>
-                                        <td class="text-center align-middle" style="width: 20%;">
-                                            <button v-on:click="Object.assign(edit, value)"
-                                                class="btn btn-sm btn-primary me-2" data-bs-toggle="modal"
-                                                data-bs-target="#update"><i class="fa-solid fa-wrench fa-xs"></i> Cập
-                                                nhập</button>
-                                            <button v-on:click="Object.assign(del, value)" class="btn btn-sm btn-danger"
-                                                data-bs-toggle="modal" data-bs-target="#delete"><i
-                                                    class="fa-solid fa-trash fa-xs"></i>
-                                                Xóa</button>
-                                        </td>
+                                        <th>#</th>
+                                        <th>Tên Thương Hiệu</th>
+                                        <th>Mô Tả</th>
+                                        <th>Tình Trạng</th>
+                                        <th>Action</th>
                                     </tr>
-                                </template>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <template v-for="(value, index) in list" :key="index">
+                                        <tr>
+                                            <th class="text-center align-middle">{{ index + 1 }}</th>
+                                            <td class="text-center align-middle">{{ value.ten_thuong_hieu }}</td>
+                                            <td class="align-middle wrap-text" style="    max-width: 292px;
+    word-wrap: break-word;
+    white-space: normal;">{{ value.mo_ta }}</td>
+                                            <td class="align-middle text-center">
+                                                <button v-on:click="doiTrangThai(value)" v-if="value.tinh_trang == 1"
+                                                    class="btn btn-success btn-sm">Còn Hàng</button>
+                                                <button v-on:click="doiTrangThai(value)" v-else
+                                                    class="btn btn-warning btn-sm">Hết Hàng</button>
+                                            </td>
+                                            <td class="text-center align-middle" style="width: 20%;">
+                                                <button v-on:click="Object.assign(edit, value)"
+                                                    class="btn btn-sm btn-primary me-2" data-bs-toggle="modal"
+                                                    data-bs-target="#update"><i class="fa-solid fa-wrench fa-xs"></i>
+                                                    Cập
+                                                    nhập</button>
+                                                <button v-on:click="Object.assign(del, value)"
+                                                    class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                                    data-bs-target="#delete"><i class="fa-solid fa-trash fa-xs"></i>
+                                                    Xóa</button>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-   </div>
     <!-- Modal Cập Nhập-->
     <div class="modal fade" id="update" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -130,7 +134,6 @@
                         </div>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
@@ -298,10 +301,4 @@ export default {
     },
 }
 </script>
-<style>
-.wrap-text {
-    max-width: 292px;
-    word-wrap: break-word;
-    white-space: normal;
-}
-</style>
+<style></style>

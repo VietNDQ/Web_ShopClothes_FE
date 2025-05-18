@@ -84,7 +84,16 @@
                                 </div>
                                 <div class="menu-title">Nhân Viên</div>
                             </a>
-                        </li>``
+                        </li>
+                    </router-link>
+                    <router-link to="/admin/quan-ly-don-hang">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/quan-ly-don-hang">
+                                <div class="parent-icon"><i class="fa-solid fa-list-check"></i>
+                                </div>
+                                <div class="menu-title">Quản Lý Đơn Hàng</div>
+                            </a>
+                        </li>
                     </router-link>
                 </ul>
             </nav>

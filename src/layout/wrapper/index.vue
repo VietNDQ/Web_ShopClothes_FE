@@ -15,9 +15,9 @@
     </div>
 </template>
 <script>
-import TopAdmin from "../components/TopAdmin.vue";
-import BotAdmin from "../components/BotAdmin.vue";
-import MenuAdmin from "../components/MenuAdmin.vue";
+import TopAdmin from "../components/Admin/TopAdmin.vue";
+import BotAdmin from "../components/Admin/BotAdmin.vue";
+import MenuAdmin from "../components/Admin/MenuAdmin.vue";
 import "../../assets/js/bootstrap.bundle.min.js";
 import "../../assets/js/jquery.min.js";
 import "../../assets/plugins/simplebar/js/simplebar.min.js";
@@ -47,4 +47,5 @@ export default {
 @import "../../assets/css/semi-dark.css";
 @import "../../assets/css/header-colors.css";
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css");
+@import "../../assets/css/style_index/styleAdmin.css";
 </style>

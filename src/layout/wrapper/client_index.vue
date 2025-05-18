@@ -13,9 +13,9 @@
     </div>
 </template>
 <script>
-import TopClient from "../components/TopClient.vue";
-import BotClient from "../components/BotClient.vue";
-import MenuClient from "../components/MenuClient.vue";
+import TopClient from "../components/Client/TopClient.vue";
+import BotClient from "../components/Client/BotClient.vue";
+import MenuClient from "../components/Client/MenuClient.vue";
 import "../../assets/js/bootstrap.bundle.min.js";
 import "../../assets/js/jquery.min.js";
 import "../../assets/plugins/simplebar/js/simplebar.min.js";
@@ -45,4 +45,5 @@ export default {
 @import "../../assets/css/semi-dark.css";
 @import "../../assets/css/header-colors.css";
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css");
+@import "../../assets/css/style_index/styleClient.css";
 </style>

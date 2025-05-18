@@ -10,7 +10,7 @@
 	</div>
 </template>
 <script>
-import TopClient from "../components/TopClient.vue";
+import TopClient from "../components/Client/TopClient.vue";
 import "../../assets/js/bootstrap.bundle.min.js";
 import "../../assets/js/jquery.min.js";
 import "../../assets/plugins/simplebar/js/simplebar.min.js";
@@ -22,6 +22,7 @@ import "../../assets/js/pace.min.js";
 export default {
     name        :   "app",
     components  :   {
+
     }
 }
 </script>

@@ -43,7 +43,7 @@
                             <select class="form-select" aria-label="Default select example">
                                 <template v-for="(variant, index) in chi_tiet_san_pham.variants" :key="index">
                                     <option v-if="variant.kich_thuoc" :value="variant.kich_thuoc">{{ variant.kich_thuoc
-                                        }}</option>
+                                    }}</option>
                                 </template>
                             </select>
                         </div>
@@ -148,28 +148,28 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <template v-for="(value, index) in san_pham_cung_danh_muc" :key="index">
+                        <template v-for="(value, index) in list_san_pham_cung_danh_muc" :key="index">
                             <template v-if="index < 4">
                                 <div class="col-lg-3 col-md-4 mt-2 mb-2 ">
-                                    <router-link :to="`/chi-tiet-san-pham/${value.id}-${value.slug_san_pham || 'default-slug'}`">
-                                    <div class="" style="height: 90%;">
-                                        <img v-bind:src="value.hinh_anh" class="card-img-top img-fluid"
-                                            style="height: 80%">
-                                        <div class="card-body text-center mt-3">
-                                            <h5><b>{{ value.ten_san_pham }}</b></h5>
-                                            <div class="d-flex justify-content-center">
-                                                <p class="text-danger fw-bold text-nowrap">
-                                                    Giá bán: <span> {{ formatVND(value.gia_ban) }}</span>
-                                                </p>
-                                                <span class="text-muted text-decoration-line-through ms-2">
-                                                    Giá gốc: <span class="fw-bold"> {{ formatVND(value.gia_goc)
-                                                        }}</span>
-                                                </span>
-                                            </div>
+                                    <router-link :to="`/chi-tiet-san-pham/` + value.id + '-' + value.slug_san_pham">
+                                        <div class="" style="height: 90%;">
+                                            <img v-bind:src="value.hinh_anh" class="card-img-top img-fluid"
+                                                style="height: 80%">
+                                            <div class="card-body text-center mt-3">
+                                                <h5><b>{{ value.ten_san_pham }}</b></h5>
+                                                <div class="d-flex justify-content-center">
+                                                    <p class="text-danger fw-bold text-nowrap">
+                                                        Giá bán: <span> {{ formatVND(value.gia_ban) }}</span>
+                                                    </p>
+                                                    <span class="text-muted text-decoration-line-through ms-2">
+                                                        Giá gốc: <span class="fw-bold"> {{ formatVND(value.gia_goc)
+                                                            }}</span>
+                                                    </span>
+                                                </div>
 
+                                            </div>
                                         </div>
-                                    </div>
-                                   </router-link>
+                                    </router-link>
                                 </div>
                             </template>
                         </template>
@@ -220,6 +220,7 @@ export default {
     props: ['id_san_pham', 'slug_san_pham'],
     data() {
         return {
+            danh_muc: {},
             chi_tiet_san_pham: {
                 id: null,
                 ten_thuong_hieu: '',
@@ -237,54 +238,57 @@ export default {
                 san_pham_lien_quan: [],
             },
             idSanPham: this.$route.params.id_san_pham,
-            san_pham_cung_danh_muc: [],
+            list_san_pham_cung_danh_muc: [],
         }
     },
     mounted() {
-    this.idSanPham = this.$route.params.id_san_pham.split('-')[0];
-    this.loadChiTietSanPham();
-    this.loadSanPhamCungDanhMuc();
-},
-
-watch: {
-    '$route.params.id_san_pham': {
-        immediate: true,
-        handler(newVal) {
-            const id = newVal.split('-')[0]; // Tách id từ chuỗi "id-slug"
-            this.idSanPham = id;
-            this.loadChiTietSanPham();
-            this.loadSanPhamCungDanhMuc();
+        this.idSanPham = this.$route.params.id_san_pham.split('-')[0];
+        this.loadChiTietSanPham();
+    },
+    watch: {
+        '$route.params': {
+            handler() {
+                this.idSanPham = this.$route.params.id_san_pham.split('-')[0];
+                this.loadChiTietSanPham();
+            },
+            immediate: true
         }
-    }
-}
-,
+    },
     methods: {
         loadSanPhamCungDanhMuc() {
-            axios
-                .get("http://127.0.0.1:8000/api/home-page/san-pham/cung-danh-muc/" + this.idSanPham)
+            axios.get(`http://127.0.0.1:8000/api/home-page/san-pham/cung-danh-muc`, {
+                params: {
+                    id_danh_muc: this.chi_tiet_san_pham.id_danh_muc,
+                    id_san_pham: this.chi_tiet_san_pham.id
+                }
+            })
                 .then((res) => {
                     if (res.data.status) {
-                        this.san_pham_cung_danh_muc = res.data.data;
-                    }
-                    else {
+                        this.list_san_pham_cung_danh_muc = res.data.data;
+                    } else {
                         this.$toast.error(res.data.message);
-                        this.$route.push('/')
+                        this.$router.push('/');
                     }
-                })
+                });
         },
+
         loadChiTietSanPham() {
             axios
                 .get("http://127.0.0.1:8000/api/home-page/san-pham/chi-tiet-san-pham/" + this.idSanPham)
                 .then((res) => {
                     if (res.data.status) {
                         this.chi_tiet_san_pham = res.data.data;
-                    }
-                    else {
+                        this.$nextTick(() => {
+                            this.loadSanPhamCungDanhMuc();
+                        });
+                    } else {
                         this.$toast.error(res.data.message);
-                        this.$route.push('/')
+                        this.$router.push('/');
                     }
                 })
-        },
+        }
+        ,
+
         formatVND(number) {
             return new Intl.NumberFormat('vi-VI', { style: 'currency', currency: 'VND' }).format(number,)
         },
@@ -292,21 +296,4 @@ watch: {
     },
 }
 </script>
-<style scoped>
-.image-container {
-    max-height: 800px;
-    overflow-y: auto;
-    padding: 10px;
-}
-
-.image-scroll {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.image-scroll img {
-    width: 100%;
-    border-radius: 8px;
-}
-</style>
+<style></style>

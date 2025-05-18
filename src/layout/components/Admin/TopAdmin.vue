@@ -1,14 +1,14 @@
 <template>
     <header>
         <div class="topbar d-flex align-items-center">
-      <div class="container">
             <nav class="navbar navbar-expand">
                 <div class="topbar-logo-header">
                     <div class="">
-                        <img src="https://png.pngtree.com/png-vector/20230120/ourmid/pngtree-beauty-logo-design-png-image_6568470.png" class="logo-icon" alt="logo icon">
+                        <img src="https://png.pngtree.com/png-vector/20230120/ourmid/pngtree-beauty-logo-design-png-image_6568470.png"
+                            class="logo-icon" alt="logo icon">
                     </div>
                     <div class="">
-                        <h4 class="logo-text">Shop</h4>
+                        <h4 class="logo-text">TrueWear Shop</h4>
                     </div>
                 </div>
                 <div class="mobile-toggle-menu"><i class='bx bx-menu'></i></div>
@@ -105,7 +105,8 @@
                                                     class="bx bx-cart-alt"></i>
                                             </div>
                                             <div class="flex-grow-1">
-                                                <h6 class="msg-name">New Orders <span class="msg-time float-end">2 min
+                                                <h6 class="msg-name">New Orders <span class="msg-time float-end">2
+                                                        min
                                                         ago</span></h6>
                                                 <p class="msg-info">You have recived new orders</p>
                                             </div>
@@ -116,7 +117,8 @@
                                             <div class="notify bg-light-success text-success"><i class="bx bx-file"></i>
                                             </div>
                                             <div class="flex-grow-1">
-                                                <h6 class="msg-name">24 PDF File<span class="msg-time float-end">19 min
+                                                <h6 class="msg-name">24 PDF File<span class="msg-time float-end">19
+                                                        min
                                                         ago</span></h6>
                                                 <p class="msg-info">The pdf files generated</p>
                                             </div>
@@ -152,7 +154,8 @@
                                                     class="bx bx-message-detail"></i>
                                             </div>
                                             <div class="flex-grow-1">
-                                                <h6 class="msg-name">New Comments <span class="msg-time float-end">4 hrs
+                                                <h6 class="msg-name">New Comments <span class="msg-time float-end">4
+                                                        hrs
                                                         ago</span></h6>
                                                 <p class="msg-info">New customer comments recived</p>
                                             </div>
@@ -251,7 +254,8 @@
                                                     alt="user avatar">
                                             </div>
                                             <div class="flex-grow-1">
-                                                <h6 class="msg-name">Oscar Garner <span class="msg-time float-end">8 min
+                                                <h6 class="msg-name">Oscar Garner <span class="msg-time float-end">8
+                                                        min
                                                         ago</span></h6>
                                                 <p class="msg-info">Various versions have evolved over</p>
                                             </div>
@@ -278,7 +282,8 @@
                                                     alt="user avatar">
                                             </div>
                                             <div class="flex-grow-1">
-                                                <h6 class="msg-name">Amelia Doe <span class="msg-time float-end">22 min
+                                                <h6 class="msg-name">Amelia Doe <span class="msg-time float-end">22
+                                                        min
                                                         ago</span></h6>
                                                 <p class="msg-info">Duis aute irure dolor in reprehenderit</p>
                                             </div>
@@ -377,34 +382,90 @@
                     </ul>
                 </div>
                 <div class="user-box dropdown">
-                    <a class="d-flex align-items-center nav-link dropdown-toggle dropdown-toggle-nocaret" href="#"
-                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="/src/assets/images/avatars/avatar-2.png" class="user-img" alt="user avatar">
-                        <div class="user-info ps-3">
-                            <p class="user-name mb-0">Pauline Seitz</p>
-                            <p class="designattion mb-0">Web Designer</p>
-                        </div>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="javascript:;"><i
-                                    class="bx bx-user"></i><span>Profile</span></a>
-                        </li>            
-                        <li>
-                            <div class="dropdown-divider mb-0"></div>
-                        </li>
-                        <li><a class="dropdown-item" href="javascript:;"><i
-                                    class='bx bx-log-out-circle'></i><span>Logout</span></a>
-                        </li>
-                    </ul>
+                    <template v-if="user.check">
+                        <a class="d-flex align-items-center nav-link dropdown-toggle dropdown-toggle-nocaret" href="#"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img :src="user.avatar" class="user-img" alt="user avatar">
+                            <div class="user-info ps-3">
+                                <p class="user-name mb-0">{{ user.name }}</p>
+                                <p class="designattion mb-0">{{ user.chuc_vu }}</p>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="javascript:;"><i
+                                        class="bx bx-user"></i><span>Profile</span></a>
+                            </li>
+                            <li>
+                                <div class="dropdown-divider mb-0"></div>
+                            </li>
+                            <li><a v-on:click="logOut()" class="dropdown-item" href="javascript:;"><i
+                                        class='bx bx-log-out-circle'></i><span>Logout</span></a>
+                            </li>
+                        </ul>
+                    </template>
+                    <template v-if="user.check == false">
+                        <router-link to="/admin/dang-nhap">
+                            <button type="button"
+                                class="btn btn-outline-dark px-5 radius-30 me-2 d-flex align-items-center"><i
+                                    class="fa-regular fa-user me-2"></i>Đăng Nhập</button>
+                        </router-link>
+                    </template>
                 </div>
+
             </nav>
         </div>
-      </div>
     </header>
 </template>
 <script>
-export default {
+import axios from 'axios';
 
+export default {
+    data() {
+        return {
+            user: {},
+        }
+    },
+    mounted() {
+        this.user = {
+            name: localStorage.getItem("ho_ten_nhan_vien"),
+            email: localStorage.getItem("email_nhan_vien"),
+            check: localStorage.getItem("check_nhan_vien") == 1,
+            chuc_vu: localStorage.getItem("ten_chuc_vu"),
+            avatar: localStorage.getItem("avatar"),
+        }
+    },
+    methods: {
+        logOut() {
+            axios
+                .get('http://127.0.0.1:8000/api/admin/logout', {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                    }
+                })
+                .then((res) => {
+                    localStorage.removeItem("nhan_vien_login");
+                    localStorage.removeItem("ho_ten_nhan_vien");
+                    localStorage.removeItem("email_nhan_vien");
+                    localStorage.removeItem("ten_chuc_vu");
+                    localStorage.removeItem("avatar");
+                    localStorage.removeItem("check_nhan_vien", 1);
+
+                    if (res.data.status) {
+                        this.$toast.success(res.data.message);
+                    } else {
+                        this.$toast.error(res.data.message);
+                    }
+                    this.$router.push('/admin/dang-nhap').then(() => {
+                        location.reload(); // Tải lại trang để dữ liệu từ localStorage cập nhật vào header
+                    });
+                })
+                .catch((res) => {
+                    this.$toast.error('Đã xảy ra lỗi khi đăng xuất');
+                    this.$router.push('/admin/dang-nhap');
+                });
+        }
+
+    },
 }
 </script>
 <style></style>
