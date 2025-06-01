@@ -33,7 +33,7 @@
                                     <td class="align-middle text-center">{{ value.ngay_sinh }}</td>
                                     <td class="align-middle text-center" style="width: 10%;">
                                         <button @click="doiTrangThai(value)" v-if="value.is_block == 0" class="btn btn-success">Hoạt Động</button>
-                                        <button @click="doiTrangThai(value)" v-else class="btn btn-warning">Tạm Dừng</button>
+                                        <button @click="doiTrangThai(value)" v-else class="btn btn-warning text-light">Tạm Khóa</button>
                                     </td>
                                     <td class="align-middle text-center" style="width: 15%;">
                                         <button @click="Object.assign(edit,value)" class="btn btn-danger me-2"  data-bs-toggle="modal" data-bs-target="#capNhatModal">Cập Nhật</button>
@@ -156,7 +156,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/khach-hang/search", this.search, {
                     headers: {
-                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                        Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                     }
                 })
                 .then((res) => {
@@ -175,7 +175,7 @@ export default {
                 .post(
                     "http://127.0.0.1:8000/api/admin/khach-hang/change-status",value, {
                         headers: {
-                            Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                            Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                         }
                     })
                 .then((res) => {
@@ -198,7 +198,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/khach-hang/delete", this.del, {
                     headers: {
-                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                        Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                     }
                 })
                 .then((res) => {
@@ -220,7 +220,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/khach-hang/update", this.edit, {
                     headers: {
-                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                        Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                     }
                 })
                 .then((res) => {
@@ -242,7 +242,7 @@ export default {
             axios
                 .get("http://127.0.0.1:8000/api/admin/khach-hang/data", {
                     headers: {
-                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                        Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                     }
                 })
                 .then((res)=>{

@@ -213,7 +213,7 @@ export default {
             axios
                 .get('http://127.0.0.1:8000/api/admin/nhan-vien/data', {
                     headers: {
-                        Authorization: "Bearer " + localStorage.getItem('nhan_vien_login')
+                        Authorization: "Bearer " + localStorage.getItem('token_nhan_vien')
                     }
                 })
                 .then((response) => {

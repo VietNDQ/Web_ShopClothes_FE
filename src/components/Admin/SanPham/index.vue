@@ -380,7 +380,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/san-pham/search", this.search, {
                     headers: {
-                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                        Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                     }
                 })
                 .then((res) => {
@@ -398,7 +398,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/san-pham/change-status", value, {
                     headers: {
-                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                        Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                     }
                 })
                 .then((res) => {
@@ -420,7 +420,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/san-pham/delete", this.del, {
                     headers: {
-                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                        Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                     }
                 })
                 .then((res) => {
@@ -444,7 +444,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/san-pham/update", this.edit, {
                     headers: {
-                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                        Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                     }
                 })
                 .then((res) => {
@@ -468,7 +468,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/san-pham/create", this.create, {
                     headers: {
-                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                        Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                     }
                 })
                 .then((res) => {
@@ -500,7 +500,7 @@ export default {
             axios
                 .get("http://127.0.0.1:8000/api/admin/danh-muc/data-open", {
                     headers: {
-                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                        Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                     }
                 })
                 .then((res) => {
@@ -517,7 +517,7 @@ export default {
             axios
                 .get("http://127.0.0.1:8000/api/admin/thuong-hieu/data-open", {
                     headers: {
-                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                        Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                     }
                 })
                 .then((res) => {
@@ -543,7 +543,7 @@ export default {
             axios
                 .get("http://127.0.0.1:8000/api/admin/san-pham/data", {
                     headers: {
-                        Authorization: 'Bearer ' + localStorage.getItem('nhan_vien_login')
+                        Authorization: 'Bearer ' + localStorage.getItem('token_nhan_vien')
                     }
                 })
                 .then((res) => {

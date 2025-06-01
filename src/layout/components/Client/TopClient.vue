@@ -16,19 +16,7 @@
                                 <strong class="phone-number">0971 411 122</strong>
                             </div>
                         </div>
-                        <template v-if="user.check === '0'">
-                            <div class="d-flex align-items-center me-4 account-group">
-                                <i class="fa-solid fa-user text-danger fa-2x me-2 user-icon"></i>
-                                <div>
-                                    <strong class="account-text text-white">Tài khoản</strong><br />
-                                    <router-link to="/khach-hang/dang-nhap"
-                                        class="account-link text-white text-decoration-none">
-                                        Đăng nhập
-                                    </router-link>
-                                </div>
-                            </div>
-                        </template>
-                        <template v-else>
+                        <template v-if="user.check_kh">
                             <div class="dropdown me-4 account-group">
                                 <a class="nav-link text-white" href="#" role="button" data-bs-toggle="dropdown"
                                     aria-expanded="false">
@@ -51,6 +39,21 @@
                                 </ul>
                             </div>
                         </template>
+                        <template v-else>
+                            <div class="d-flex align-items-center me-4 account-group">
+                                <i class="fa-solid fa-user text-danger fa-2x me-2 user-icon"></i>
+                                <div>
+                                    <router-link to="/khach-hang/dang-nhap">
+                                        <strong class="account-text text-white">Tài khoản</strong><br />
+                                    </router-link>
+                                    <router-link to="/khach-hang/dang-nhap"
+                                        class="account-link text-white text-decoration-none">
+                                        Đăng nhập
+                                    </router-link>
+                                </div>
+                            </div>
+                        </template>
+
                         <router-link to="/checkouts" class="text-decoration-none me-2">
                             <div class="dropdown me-4 account-group">
                                 <a class="nav-link text-white" href="#" role="button" data-bs-toggle="dropdown"
@@ -122,7 +125,7 @@ export default {
     mounted() {
         this.user = {
             name: localStorage.getItem("ho_ten_khach_hang"),
-            check: parseInt(localStorage.getItem("check_kh")) || 0, // ép về number
+            check_kh: localStorage.getItem("check_kh"),
         };
     },
     methods: {
@@ -136,7 +139,7 @@ export default {
                 .then((res) => {
                     localStorage.removeItem("token_khach_hang");
                     localStorage.removeItem("check_kh");
-
+                    localStorage.removeItem("ho_ten_khach_hang");
                     if (res.data.status) {
                         this.$toast.success(res.data.message);
 

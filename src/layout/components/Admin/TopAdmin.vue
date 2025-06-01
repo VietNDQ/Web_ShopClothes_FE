@@ -382,7 +382,7 @@
                     </ul>
                 </div>
                 <div class="user-box dropdown">
-                    <template v-if="user.check">
+                    <template v-if="user.check_nhan_vien">
                         <a class="d-flex align-items-center nav-link dropdown-toggle dropdown-toggle-nocaret" href="#"
                             role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <img :src="user.avatar" class="user-img" alt="user avatar">
@@ -403,7 +403,7 @@
                             </li>
                         </ul>
                     </template>
-                    <template v-if="user.check == false">
+                    <template v-else>
                         <router-link to="/admin/dang-nhap">
                             <button type="button"
                                 class="btn btn-outline-dark px-5 radius-30 me-2 d-flex align-items-center"><i
@@ -429,7 +429,7 @@ export default {
         this.user = {
             name: localStorage.getItem("ho_ten_nhan_vien"),
             email: localStorage.getItem("email_nhan_vien"),
-            check: localStorage.getItem("check_nhan_vien") == 1,
+            check_nhan_vien: localStorage.getItem("check_nhan_vien"),
             chuc_vu: localStorage.getItem("ten_chuc_vu"),
             avatar: localStorage.getItem("avatar"),
         }
@@ -439,25 +439,25 @@ export default {
             axios
                 .get('http://127.0.0.1:8000/api/admin/logout', {
                     headers: {
-                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                        Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                     }
                 })
                 .then((res) => {
-                    localStorage.removeItem("nhan_vien_login");
+                    localStorage.removeItem("token_nhan_vien");
                     localStorage.removeItem("ho_ten_nhan_vien");
                     localStorage.removeItem("email_nhan_vien");
                     localStorage.removeItem("ten_chuc_vu");
                     localStorage.removeItem("avatar");
-                    localStorage.removeItem("check_nhan_vien", 1);
-
+                    localStorage.removeItem("check_nhan_vien");
                     if (res.data.status) {
                         this.$toast.success(res.data.message);
+                        this.$router.push('/admin/dang-nhap').then(() => {
+                            location.reload(); // Tải lại trang để dữ liệu từ localStorage cập nhật vào header
+                        });
                     } else {
                         this.$toast.error(res.data.message);
                     }
-                    this.$router.push('/admin/dang-nhap').then(() => {
-                        location.reload(); // Tải lại trang để dữ liệu từ localStorage cập nhật vào header
-                    });
+
                 })
                 .catch((res) => {
                     this.$toast.error('Đã xảy ra lỗi khi đăng xuất');

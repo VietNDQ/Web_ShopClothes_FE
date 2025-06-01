@@ -169,7 +169,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/danh-muc/change-status", value, {
                     headers: {
-                        Authorization: 'Bearer ' + localStorage.getItem('nhan_vien_login')
+                        Authorization: 'Bearer ' + localStorage.getItem('token_nhan_vien')
                     }
                 })
                 .then((res) => {
@@ -189,7 +189,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/danh-muc/search", this.search, {
                     headers: {
-                        Authorization: 'Bearer ' + localStorage.getItem('nhan_vien_login')
+                        Authorization: 'Bearer ' + localStorage.getItem('token_nhan_vien')
                     }
                 })
                 .then((res) => {
@@ -207,7 +207,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/danh-muc/delete", this.del, {
                     headers: {
-                        Authorization: 'Bearer ' + localStorage.getItem('nhan_vien_login')
+                        Authorization: 'Bearer ' + localStorage.getItem('token_nhan_vien')
                     }
                 })
                 .then((res) => {
@@ -229,7 +229,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/danh-muc/update", this.edit, {
                     headers: {
-                        Authorization: 'Bearer ' + localStorage.getItem('nhan_vien_login')
+                        Authorization: 'Bearer ' + localStorage.getItem('token_nhan_vien')
                     }
                 })
                 .then((res) => {
@@ -255,7 +255,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/danh-muc/create", this.create, {
                     headers: {
-                        Authorization: 'Bearer ' + localStorage.getItem('nhan_vien_login')
+                        Authorization: 'Bearer ' + localStorage.getItem('token_nhan_vien')
                     }
                 })
                 .then((res) => {
@@ -281,7 +281,7 @@ export default {
             axios
                 .get("http://127.0.0.1:8000/api/admin/danh-muc/data", {
                     headers: {
-                        Authorization: 'Bearer ' + localStorage.getItem('nhan_vien_login')
+                        Authorization: 'Bearer ' + localStorage.getItem('token_nhan_vien')
                     }
                 })
                 .then((res) => {

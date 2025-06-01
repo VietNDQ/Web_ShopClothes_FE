@@ -271,7 +271,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/bien-the-san-pham/search", this.search, {
                     headers: {
-                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                        Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                     }
                 })
                 .then((res) => {
@@ -289,7 +289,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/bien-the-san-pham/change-status", value, {
                     headers: {
-                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                        Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                     }
                 })
                 .then((res) => {
@@ -306,7 +306,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/bien-the-san-pham/update", this.edit, {
                     headers: {
-                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                        Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                     }
                 })
                 .then((res) => {
@@ -337,7 +337,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/bien-the-san-pham/create", this.create, {
                     headers: {
-                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                        Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                     }
                 })
                 .then((res) => {
@@ -368,7 +368,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/bien-the-san-pham/delete", this.del, {
                     headers: {
-                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                        Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                     }
                 })
                 .then((res) => {
@@ -385,7 +385,7 @@ export default {
             axios
                 .get("http://127.0.0.1:8000/api/admin/san-pham/data", {
                     headers: {
-                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                        Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                     }
                 })
                 .then((res) => {
@@ -396,7 +396,7 @@ export default {
             axios
                 .get("http://127.0.0.1:8000/api/admin/bien-the-san-pham/data", {
                     headers: {
-                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                        Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                     }
                 })
                 .then((res) => {

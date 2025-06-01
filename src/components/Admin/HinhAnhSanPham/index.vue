@@ -127,7 +127,7 @@ export default {
         loadHinhAnh() {
             axios.get("http://127.0.0.1:8000/api/admin/hinh-anh/data",{
                 headers: {
-                    Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                    Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                 }
             })
                 .then(res => {
@@ -150,7 +150,7 @@ export default {
             const payLoad = { id: value.id };
             axios.post("http://127.0.0.1:8000/api/admin/chi-tiet-hinh-anh/data", payLoad, {
                 headers: {
-                    Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                    Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                 }
             })
                 .then(res => {
@@ -175,7 +175,7 @@ export default {
 
             axios.post("http://localhost:8000/api/admin/hinh-anh/create", this.create ,{
                 headers: {
-                    Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                    Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                 }
             })
                 .then(res => {
@@ -195,7 +195,7 @@ export default {
         xoaHinhAnh() {
             axios.post("http://127.0.0.1:8000/api/admin/hinh-anh/delete", this.del ,{
                 headers: {
-                    Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                    Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                 }
             })
                 .then(res => {
@@ -219,7 +219,7 @@ export default {
             }
             axios.post("http://127.0.0.1:8000/api/admin/hinh-anh/search", this.search ,{
                 headers: {
-                    Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                    Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                 }
             })
                 .then(res => {

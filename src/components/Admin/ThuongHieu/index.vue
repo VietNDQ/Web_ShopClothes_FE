@@ -173,7 +173,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/thuong-hieu/change-status", value, {
                     headers: {
-                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                        Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                     }
                 })
                 .then((res) => {
@@ -199,7 +199,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/thuong-hieu/search", this.search, {
                     headers: {
-                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                        Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                     }
                 })
                 .then((res) => {
@@ -217,7 +217,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/thuong-hieu/delete", this.del, {
                     headers: {
-                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                        Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                     }
                 })
                 .then((res) => {
@@ -239,7 +239,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/thuong-hieu/update", this.edit, {
                     headers: {
-                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                        Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                     }
                 })
                 .then((res) => {
@@ -265,7 +265,7 @@ export default {
             axios
                 .post("http://127.0.0.1:8000/api/admin/thuong-hieu/create", this.create, {
                     headers: {
-                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                        Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                     }
                 })
                 .then((res) => {
@@ -291,7 +291,7 @@ export default {
             axios
                 .get("http://127.0.0.1:8000/api/admin/thuong-hieu/data", {
                     headers: {
-                        Authorization: "Bearer " + localStorage.getItem("nhan_vien_login")
+                        Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                     }
                 })
                 .then((res) => {

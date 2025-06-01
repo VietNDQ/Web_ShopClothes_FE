@@ -4,21 +4,20 @@ import { createToaster } from "@meforma/vue-toaster";
 const toaster = createToaster({ position: "top-right" });
 
 export default function (to, from, next) {
+  var token = localStorage.getItem("token_nhan_vien");
   axios
-    .get(
-      "http://127.0.0.1:8000/api/admin/check-token",{
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("nhan_vien_login"),
-        },
-      }
-    )
+    .get("http://127.0.0.1:8000/api/admin/check-token", {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
     .then((response) => {
       if (response.data.status) {
         localStorage.setItem("ho_ten_nhan_vien", response.data.ho_va_ten);
-        localStorage.setItem("ten_chuc_vu",response.data.ten_chuc_vu)
         localStorage.setItem("email_nhan_vien", response.data.email);
         localStorage.setItem("avatar", response.data.avatar);
         localStorage.setItem("check_nhan_vien", response.data.status);
+        localStorage.setItem("ten_chuc_vu", response.data.ten_chuc_vu);
         next();
       } else {
         toaster.error(response.data.message || "Phiên đăng nhập hết hạn!");
@@ -27,7 +26,7 @@ export default function (to, from, next) {
     })
     .catch((error) => {
       console.error("Lỗi xác thực token:", error);
-      toaster.error("Lỗi kết nối server, vui lòng đăng nhập lại!");
+      toaster.error("Bạn chưa đăng nhập. Vui lòng đăng nhập!");
       next("/admin/dang-nhap");
     });
 }

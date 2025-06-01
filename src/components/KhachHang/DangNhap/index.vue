@@ -38,9 +38,7 @@
                                             <hr class="flex-grow-1">
                                         </div>
 
-                                        <button class="btn btn-outline-dark w-100"><i class="fa-brands fa-google"></i>
-                                            Đăng
-                                            nhập bằng Google</button>
+                                        <GoogleLogin :callback="LoginGoogle" style="width: 100%;" />
                                     </div>
                                     <div class="row justify-content-center align-items-center">
                                         <div class="col-lg-9">
@@ -69,7 +67,7 @@
 
 <script>
 import axios from 'axios';
-
+import { decodeCredential } from 'vue3-google-login'
 export default {
     data() {
         return {
@@ -80,19 +78,26 @@ export default {
         }
     },
     mounted() {
-           console.log(localStorage.getItem("token_khach_hang"));
+        localStorage.getItem("token_khach_hang");
+        this.kiemTraDangNhap();
     },
     methods: {
-        Login() {
+        LoginGoogle(response) {
+            // var userData = decodeCredential(response.credential)
+            // console.log(userData);
+            var payload = {
+                'id_token': response.credential,
+            };
             axios
-                .post("http://127.0.0.1:8000/api/khach-hang/dang-nhap", this.user)
+                .post("http://127.0.0.1:8000/api/khach-hang/login-google", payload)
                 .then((res) => {
                     if (res.data.status) {
                         localStorage.setItem("token_khach_hang", res.data.token);
                         localStorage.setItem("ho_ten_khach_hang", res.data.ho_va_ten);
-                        localStorage.setItem("check_kh", 1); // nên đặt là 1 rõ ràng
                         this.$toast.success(res.data.message)
-                        this.$router.push('/khach-hang/profile');
+                        this.$router.push('/khach-hang/profile').then(() => {
+                            location.reload();
+                        })
                     } else {
                         this.$toast.error(res.data.message);
                     }
@@ -106,6 +111,54 @@ export default {
                     } else {
                         this.$toast.error("Đã có lỗi xảy ra, vui lòng thử lại.");
                     }
+                });
+        },
+        Login() {
+            axios
+                .post("http://127.0.0.1:8000/api/khach-hang/dang-nhap", this.user)
+                .then((res) => {
+                    if (res.data.status) {
+                        localStorage.setItem("token_khach_hang", res.data.token);
+                        localStorage.setItem("ho_ten_khach_hang", res.data.ho_va_ten);
+                        localStorage.setItem("check_kh", res.data.status);
+                        this.$toast.success(res.data.message)
+                        this.$router.push('/khach-hang/profile').then(() => {
+                            location.reload(); // Tải lại trang để dữ liệu từ localStorage cập nhật vào header
+                        });
+                    } else {
+                        this.$toast.error(res.data.message);
+                    }
+
+                })
+                .catch((err) => {
+                    if (err.response && err.response.data && err.response.data.errors) {
+                        const list = Object.values(err.response.data.errors);
+                        list.forEach((v) => {
+                            this.$toast.error(v[0]);
+                        });
+                    } else {
+                        this.$toast.error("Đã có lỗi xảy ra, vui lòng thử lại.");
+                    }
+                });
+        },
+        kiemTraDangNhap(){
+            axios
+                .get("http://127.0.0.1:8000/api/khach-hang/check-token", {
+                    headers: {
+                        Authorization: 'Bearer ' + localStorage.getItem("token_khach_hang")
+                    }
+                })
+                .then((res) =>{
+                    if(res.data.status){
+                        this.$router.push("/khach-hang/profile");
+                    }
+                    else{
+                        this.$toast.error(res.data.message);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Lỗi kiểm tra đăng nhập:", error);
+                    this.$toast.error("Đã có lỗi xảy ra");
                 });
         }
     },

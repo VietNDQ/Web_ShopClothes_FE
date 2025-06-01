@@ -22,7 +22,7 @@ export default function(to, from, next){
         })
         .catch((error) => {
       console.error("Lỗi xác thực token:", error);
-      toaster.error("Lỗi kết nối server, vui lòng đăng nhập lại!");
+      toaster.error("Bạn chưa đăng nhập. Vui lòng đăng nhập!");
       next("/khach-hang/dang-nhap");
     });
 }

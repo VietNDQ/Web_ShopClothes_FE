@@ -66,11 +66,8 @@ export default {
                 .post("http://127.0.0.1:8000/api/admin/dang-nhap", this.user)
                 .then((res) => {
                     if (res.data.status) {
-                        localStorage.setItem("nhan_vien_login", res.data.token);
-                        localStorage.setItem("ho_ten_nhan_vien", res.data.name);
-                        localStorage.setItem("email_nhan_vien", res.data.email);
-                        localStorage.setItem("ten_chuc_vu", res.data.chuc_vu);
-                        localStorage.setItem("check_nhan_vien", 1);
+                        localStorage.setItem("token_nhan_vien", res.data.token);
+                        // this.$router.push('/admin/san-pham');
                         this.$toast.success(res.data.message);
                         this.$router.push('/admin/san-pham').then(() => {
                             location.reload(); // Tải lại trang để dữ liệu từ localStorage cập nhật vào header
