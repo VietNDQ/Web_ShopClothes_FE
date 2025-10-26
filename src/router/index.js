@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router"; // cài vue-router: npm install vue-router@next --save
 import checkNhanVienLogin from "./checkNhanVienLogin";
 import checkKhachHangLogin from "./checkKhachHangLogin";
+
 const routes = [
   {
     path: "/",
@@ -8,16 +9,31 @@ const routes = [
     meta: { layout: "client" },
   },
   {
-    path: "/chi-tiet-san-pham/:id_san_pham-:slug_san_pham",
-    component: () => import("../components/Client/ChiTietSanPham/index.vue"),
+    path: "/san-pham",
+    component: () => import("../components/Client/SanPham/index.vue"),
     meta: { layout: "client" },
   },
   {
-    path: "/checkouts",
-    component: () => import("../components/Client/GioHang/index.vue"),
+    path: "/chi-tiet-san-pham/:id_san_pham-:slug_san_pham",
+    component: () => import("../components/Client/ChiTietSanPham/index.vue"),
+    meta: { layout: "client" },
+    
+  },
+  {
+    path: "/don-hang",
+    component: () => import("../components/Client/DonHang/index.vue"),
     meta: { layout: "client" },
   },
-
+  {
+    path: "/lich-su-mua-hang",
+    component: () => import("../components/Client/LichSuMuaHang/index.vue"),
+    meta: { layout: "client" },
+  },
+  {
+    path: "/khach-hang/chat-box",
+    component: () => import("../components/Client/ChatBoxClient/index.vue"),
+    meta: { layout: "client" },
+  },
   //Admin
   {
     path: "/admin/quan-ly-don-hang",
@@ -75,6 +91,12 @@ const routes = [
   {
     path: "/admin/phan-quyen",
     component: () => import("../components/Admin/PhanQuyen/index.vue"),
+    meta: { layout: "default" },
+    beforeEnter: checkNhanVienLogin,
+  },
+  {
+    path: "/admin/chat-box",
+    component: () => import("../components/Admin/ChatBox/index.vue"),
     meta: { layout: "default" },
   },
   //Sign khach hang

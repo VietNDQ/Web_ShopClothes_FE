@@ -60,6 +60,9 @@ export default {
             },
         }
     },
+    mounted() {
+        this.kiemTraDangNhap();
+    },
     methods: {
         Login() {
             axios
@@ -83,6 +86,22 @@ export default {
                         this.$toast.error(v[0]);
                     });
                 });
+        },
+        kiemTraDangNhap() {
+            axios
+                .get("http://127.0.0.1:8000/api/admin/check-token", {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
+                    }
+                })
+                .then((res) => {
+                    if (res.data.status) {
+                        this.$router.push("/admin/san-pham")
+                    }
+                    else{
+                        this.$toast.error(res.data.message);
+                    }
+                })
         }
     }
 

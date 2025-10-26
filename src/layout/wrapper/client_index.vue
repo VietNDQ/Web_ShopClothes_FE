@@ -24,6 +24,7 @@ import "../../assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js";
 import "../../assets/js/index.js";
 import "../../assets/js/app.js";
 import "../../assets/js/pace.min.js";
+import emitter from "../../eventBus.js";
 export default {
     name: "app",
     components: {

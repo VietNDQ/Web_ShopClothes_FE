@@ -118,29 +118,32 @@
                 </div>
                 <div class="modal-body">
                     <label for="">Họ Và Tên</label>
-                    <input type="text" class="form-control mt-2 mb-2" placeholder="Họ Tên" aria-label="First name">
-                    <label for="">Avatar</label>
-                    <input type="text" class="form-control mt-2 mb-2" placeholder="Avatar" aria-label="First name">
-                    <label for="">Email</label>
-                    <input type="email" class="form-control mt-2 mb-2" placeholder="Email" aria-label="First name">
-                    <label for="">Số Điện Thoại</label>
-                    <input type="text" class="form-control mt-2 mb-2" placeholder="Số Điện Thoại"
+                    <input v-model="edit.ho_va_ten" type="text" class="form-control mt-2 mb-2" placeholder="Họ Tên"
                         aria-label="First name">
+                    <label for="">Avatar</label>
+                    <input v-model="edit.avatar" type="text" class="form-control mt-2 mb-2" placeholder="Avatar"
+                        aria-label="First name">
+                    <label for="">Email</label>
+                    <input v-model="edit.email" type="email" class="form-control mt-2 mb-2" placeholder="Email"
+                        aria-label="First name">
+                    <label for="">Số Điện Thoại</label>
+                    <input v-model="edit.so_dien_thoai" type="text" class="form-control mt-2 mb-2"
+                        placeholder="Số Điện Thoại" aria-label="First name">
                     <label for="">Mật Khẩu</label>
-                    <input type="password" class="form-control mt-2 mb-2" placeholder="Mật Khẩu"
+                    <input v-model="edit.password" type="password" class="form-control mt-2 mb-2" placeholder="Mật Khẩu"
                         aria-label="First name">
                     <label for="">Địa Chỉ</label>
-                    <input type="text" class="form-control mt-2 mb-2" placeholder="Địa Chỉ" aria-label="First name">
+                    <input v-model="edit.dia_chi" type="text" class="form-control mt-2 mb-2" placeholder="Địa Chỉ"
+                        aria-label="First name">
                     <label for="">Chức Vụ</label>
-                    <select class="form-select mt-2 mb-2" aria-label="Default select example">
+                    <select v-model="edit.id_chuc_vu" class="form-select mt-2 mb-2" aria-label="Default select example">
                         <option selected>Chọn Chức Vụ</option>
-                        <option value="1">Quản Trị Viên</option>
-                        <option value="2">Nhân Viên Bán Hàng</option>
-                        <option value="3">Nhân Viên Kho</option>
-                        <option value="4">Nhân Viên Giao Hàng</option>
+                        <template v-for="(value, index) in list_chuc_vu" :key="index">
+                            <option :value="value.id">{{ value.ten_chuc_vu }}</option>
+                        </template>
                     </select>
                     <label for="">Tình Trạng</label>
-                    <select class="form-select mt-2 mb-2" aria-label="Default select example">
+                    <select v-model="edit.tinh_trang" class="form-select mt-2 mb-2" aria-label="Default select example">
                         <option selected>Chọn Tình Trạng</option>
                         <option value="1">Hoạt Động</option>
                         <option value="2">Tạm Khóa</option>
@@ -148,7 +151,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cập Nhật</button>
+                    <button @click="editNhanVien()" type="button" class="btn btn-primary" data-bs-dismiss="modal">Cập
+                        Nhật</button>
                 </div>
             </div>
         </div>
@@ -203,12 +207,66 @@ export default {
                 'id_chuc_vu': '',
             },
             list: [],
+            edit: {
+                'ho_va_ten': '',
+                'email': '',
+                'avatar': '',
+                'so_dien_thoai': '',
+                'password': '',
+                'dia_chi': '',
+                'tinh_trang': '',
+                'id_chuc_vu': '',
+            },
+            list_chuc_vu: [],
         }
     },
     mounted() {
         this.loadData();
     },
     methods: {
+        editNhanVien() {
+            axios
+                .post('http://127.0.0.1:8000/api/admin/nhan-vien/update', this.edit, {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem('token_nhan_vien')
+                    }
+                })
+                .then((response) => {
+                    this.$toast.success(response.data.message);
+                    this.edit = {
+                        'ho_va_ten': '',
+                        'email': '',
+                        'avatar': '',
+                        'so_dien_thoai': '',
+                        'password': '',
+                        'dia_chi': '',
+                        'tinh_trang': '',
+                        'id_chuc_vu': '',
+                    };
+                    this.loadData();
+                })
+                .catch((res) => {
+                    const list = Object.values(res.response.data.errors);
+
+                    list.forEach((v, i) => {
+                        this.$toast.error(v[0]);
+                    });
+                })
+        },
+        loadChucVu() {
+            axios
+                .get('http://127.0.0.1:8000/api/admin/chuc-vu/get-data')
+                .then((res) => {
+                    this.list_chuc_vu = res.data.data;
+                })
+                .catch((res) => {
+                    const list = Object.values(res.response.data.errors);
+
+                    list.forEach((v, i) => {
+                        this.$toast.error(v[0]);
+                    });
+                })
+        },
         loadData() {
             axios
                 .get('http://127.0.0.1:8000/api/admin/nhan-vien/data', {

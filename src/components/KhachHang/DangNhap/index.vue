@@ -152,9 +152,6 @@ export default {
                     if(res.data.status){
                         this.$router.push("/khach-hang/profile");
                     }
-                    else{
-                        this.$toast.error(res.data.message);
-                    }
                 })
                 .catch((error) => {
                     console.error("Lỗi kiểm tra đăng nhập:", error);
