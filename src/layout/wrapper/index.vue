@@ -47,5 +47,5 @@ export default {
 @import "../../assets/css/semi-dark.css";
 @import "../../assets/css/header-colors.css";
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css");
-/* @import "../../assets/css/style_index/styleAdmin.css"; */
+@import "../../assets/css/style_index/styleAdmin.css";
 </style>

@@ -36,10 +36,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const searchIcon = document.querySelector(".mobile-search-icon");
     if (searchIcon) {
         searchIcon.addEventListener("click", function () {
-            const searchBar = document.querySelector(".search-bar");
-            if (searchBar) {
-                addClass(searchBar, "full-search-bar");
-            }
+            addClass(document.querySelector(".search-bar"), "full-search-bar");
         });
     }
 
@@ -47,10 +44,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const searchClose = document.querySelector(".search-close");
     if (searchClose) {
         searchClose.addEventListener("click", function () {
-            const searchBar = document.querySelector(".search-bar");
-            if (searchBar) {
-                removeClass(searchBar, "full-search-bar");
-            }
+            removeClass(document.querySelector(".search-bar"), "full-search-bar");
         });
     }
 
@@ -58,10 +52,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const mobileToggleMenu = document.querySelector(".mobile-toggle-menu");
     if (mobileToggleMenu) {
         mobileToggleMenu.addEventListener("click", function () {
-            const wrapper = document.querySelector(".wrapper");
-            if (wrapper) {
-                addClass(wrapper, "toggled");
-            }
+            addClass(document.querySelector(".wrapper"), "toggled");
         });
     }
 
@@ -70,34 +61,27 @@ document.addEventListener("DOMContentLoaded", function() {
     if (toggleIcon) {
         toggleIcon.addEventListener("click", function () {
             const wrapper = document.querySelector(".wrapper");
-            const sidebarWrapper = document.querySelector(".sidebar-wrapper");
-            if (wrapper) {
-                if (hasClass(wrapper, "toggled")) {
-                    removeClass(wrapper, "toggled");
-                } else {
-                    addClass(wrapper, "toggled");
-                    if (sidebarWrapper) {
-                        sidebarWrapper.onmouseenter = function () {
-                            addClass(wrapper, "sidebar-hovered");
-                        };
-                        sidebarWrapper.onmouseleave = function () {
-                            removeClass(wrapper, "sidebar-hovered");
-                        };
-                    }
-                }
+            if (hasClass(wrapper, "toggled")) {
+                removeClass(wrapper, "toggled");
+                // document.querySelector(".sidebar-wrapper").onmouseenter = null;
+            } else {
+                addClass(wrapper, "toggled");
+                document.querySelector(".sidebar-wrapper").onmouseenter = function () {
+                    addClass(wrapper, "sidebar-hovered");
+                };
+                document.querySelector(".sidebar-wrapper").onmouseleave = function () {
+                    removeClass(wrapper, "sidebar-hovered");
+                };
             }
         });
     }
 
     // Tạo sự kiện scroll cho window để hiển thị nút back-to-top
     window.addEventListener("scroll", function () {
-        const backToTopBtn = document.querySelector('.back-to-top');
-        if (backToTopBtn) {
-            if (window.pageYOffset > 300) {
-                backToTopBtn.style.display = "block";
-            } else {
-                backToTopBtn.style.display = "none";
-            }
+        if (window.pageYOffset > 300) {
+            document.querySelector('.back-to-top').style.display = "block";
+        } else {
+            document.querySelector('.back-to-top').style.display = "none";
         }
     });
 
@@ -113,10 +97,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const chatToggleBtn = document.querySelector(".chat-toggle-btn");
     if (chatToggleBtn) {
         chatToggleBtn.addEventListener("click", function () {
-            const chatWrapper = document.querySelector(".chat-wrapper");
-            if (chatWrapper) {
-                chatWrapper.classList.toggle("chat-toggled");
-            }
+            document.querySelector(".chat-wrapper").classList.toggle("chat-toggled");
         });
     }
 
@@ -124,10 +105,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const chatToggleBtnMobile = document.querySelector(".chat-toggle-btn-mobile");
     if (chatToggleBtnMobile) {
         chatToggleBtnMobile.addEventListener("click", function () {
-            const chatWrapper = document.querySelector(".chat-wrapper");
-            if (chatWrapper) {
-                chatWrapper.classList.remove("chat-toggled");
-            }
+            document.querySelector(".chat-wrapper").classList.remove("chat-toggled");
         });
     }
 
@@ -135,10 +113,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const emailToggleBtn = document.querySelector(".email-toggle-btn");
     if (emailToggleBtn) {
         emailToggleBtn.addEventListener("click", function () {
-            const emailWrapper = document.querySelector(".email-wrapper");
-            if (emailWrapper) {
-                emailWrapper.classList.toggle("email-toggled");
-            }
+            document.querySelector(".email-wrapper").classList.toggle("email-toggled");
         });
     }
 
@@ -146,10 +121,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const emailToggleBtnMobile = document.querySelector(".email-toggle-btn-mobile");
     if (emailToggleBtnMobile) {
         emailToggleBtnMobile.addEventListener("click", function () {
-            const emailWrapper = document.querySelector(".email-wrapper");
-            if (emailWrapper) {
-                emailWrapper.classList.remove("email-toggled");
-            }
+            document.querySelector(".email-wrapper").classList.remove("email-toggled");
         });
     }
 
@@ -157,10 +129,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const composeMailBtn = document.querySelector(".compose-mail-btn");
     if (composeMailBtn) {
         composeMailBtn.addEventListener("click", function () {
-            const composeMailPopup = document.querySelector(".compose-mail-popup");
-            if (composeMailPopup) {
-                composeMailPopup.style.display = "block";
-            }
+            document.querySelector(".compose-mail-popup").style.display = "block";
         });
     }
 
@@ -168,10 +137,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const composeMailClose = document.querySelector(".compose-mail-close");
     if (composeMailClose) {
         composeMailClose.addEventListener("click", function () {
-            const composeMailPopup = document.querySelector(".compose-mail-popup");
-            if (composeMailPopup) {
-                composeMailPopup.style.display = "none";
-            }
+            document.querySelector(".compose-mail-popup").style.display = "none";
         });
     }
 
@@ -179,10 +145,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const switcherBtn = document.querySelector(".switcher-btn");
     if (switcherBtn) {
         switcherBtn.addEventListener("click", function () {
-            const switcherWrapper = document.querySelector(".switcher-wrapper");
-            if (switcherWrapper) {
-                switcherWrapper.classList.toggle("switcher-toggled");
-            }
+            document.querySelector(".switcher-wrapper").classList.toggle("switcher-toggled");
         });
     }
 
@@ -190,10 +153,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const closeSwitcher = document.querySelector(".close-switcher");
     if (closeSwitcher) {
         closeSwitcher.addEventListener("click", function () {
-            const switcherWrapper = document.querySelector(".switcher-wrapper");
-            if (switcherWrapper) {
-                switcherWrapper.classList.remove("switcher-toggled");
-            }
+            document.querySelector(".switcher-wrapper").classList.remove("switcher-toggled");
         });
     }
 
