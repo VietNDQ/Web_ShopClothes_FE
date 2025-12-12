@@ -222,6 +222,7 @@ export default {
     },
     mounted() {
         this.loadData();
+        this.loadChucVu();
     },
     methods: {
         editNhanVien() {
@@ -255,12 +256,16 @@ export default {
         },
         loadChucVu() {
             axios
-                .get('http://127.0.0.1:8000/api/admin/chuc-vu/get-data')
-                .then((res) => {
-                    this.list_chuc_vu = res.data.data;
+                .get('http://127.0.0.1:8000/api/admin/chuc-vu/get-data', {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem('token_nhan_vien')
+                    }
+                })
+                .then((response) => {
+                    this.list_chuc_vu = response.data.data;
                 })
                 .catch((res) => {
-                    const list = Object.values(res.response.data.errors);
+                    const list = Object.values(response.response.data.errors);
 
                     list.forEach((v, i) => {
                         this.$toast.error(v[0]);

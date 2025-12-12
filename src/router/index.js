@@ -14,7 +14,7 @@ const routes = [
     meta: { layout: "client" },
   },
   {
-    path: "/chi-tiet-san-pham/:id_san_pham-:slug_san_pham",
+    path: "/chi-tiet-san-pham/:slug",
     component: () => import("../components/Client/ChiTietSanPham/index.vue"),
     meta: { layout: "client" },
     
@@ -30,11 +30,28 @@ const routes = [
     meta: { layout: "client" },
   },
   {
+    path: "/thanh-toan-chuyen-khoan",
+    component: () => import("../components/Client/ThanhToanChuyenKhoan/index.vue"),
+    meta: { layout: "client" },
+  },
+  {
     path: "/khach-hang/chat-box",
     component: () => import("../components/Client/ChatBoxClient/index.vue"),
     meta: { layout: "client" },
   },
   //Admin
+  {
+    path: "/admin/thong-ke",
+    component: () => import("../components/Admin/ThongKe/index.vue"),
+    meta: { layout: "default" },
+    beforeEnter: checkNhanVienLogin,
+  },
+  {
+    path: "/admin/voucher",
+    component: () => import("../components/Admin/Voucher/index.vue"),
+    meta: { layout: "default" },
+    beforeEnter: checkNhanVienLogin,
+  },
   {
     path: "/admin/quan-ly-don-hang",
     component: () => import("../components/Admin/QuanLyDonHang/index.vue"),
@@ -48,9 +65,13 @@ const routes = [
     beforeEnter: checkNhanVienLogin,
   },
   {
+    path: "/dang-nhap",
+    component: () => import("../components/Common/DangNhap/index.vue"),
+    meta: { layout: "client" },
+  },
+  {
     path: "/admin/dang-nhap",
-    component: () => import("../components/Admin/DangNhapAdmin/index.vue"),
-    meta: { layout: "default" },
+    redirect: "/dang-nhap",
   },
   {
     path: "/admin/khach-hang",
@@ -60,7 +81,11 @@ const routes = [
   },
   {
     path: "/admin/san-pham",
-    component: () => import("../components/Admin/SanPham/index.vue"),
+    redirect: "/admin/dang-san-pham",
+  },
+  {
+    path: "/admin/dang-san-pham",
+    component: () => import("../components/Admin/QuanLySanPham/index.vue"),
     meta: { layout: "default" },
     beforeEnter: checkNhanVienLogin,
   },
@@ -71,39 +96,21 @@ const routes = [
     beforeEnter: checkNhanVienLogin,
   },
   {
-    path: "/admin/thuong-hieu",
-    component: () => import("../components/Admin/ThuongHieu/index.vue"),
-    meta: { layout: "default" },
-    beforeEnter: checkNhanVienLogin,
-  },
-  {
-    path: "/admin/bien-the-san-pham",
-    component: () => import("../components/Admin/BienTheSanPham/index.vue"),
-    meta: { layout: "default" },
-    beforeEnter: checkNhanVienLogin,
-  },
-  {
-    path: "/admin/hinh-anh-san-pham",
-    component: () => import("../components/Admin/HinhAnhSanPham/index.vue"),
-    meta: { layout: "default" },
-    beforeEnter: checkNhanVienLogin,
-  },
-  {
     path: "/admin/phan-quyen",
     component: () => import("../components/Admin/PhanQuyen/index.vue"),
     meta: { layout: "default" },
     beforeEnter: checkNhanVienLogin,
   },
   {
-    path: "/admin/chat-box",
-    component: () => import("../components/Admin/ChatBox/index.vue"),
+    path: "/admin/profile",
+    component: () => import("../components/Admin/NhanVien/Profile/index.vue"),
     meta: { layout: "default" },
+    beforeEnter: checkNhanVienLogin,
   },
   //Sign khach hang
   {
     path: "/khach-hang/dang-nhap",
-    component: () => import("../components/KhachHang/DangNhap/index.vue"),
-    meta: { layout: "client" },
+    redirect: "/dang-nhap",
   },
   {
     path: "/khach-hang/dang-ky",

@@ -303,7 +303,7 @@ export default {
         phanQuyen(value) {
             this.chon_chuc_vu = value;
             axios
-                .post('http://127.0.0.1:8000/api/admin/chi-tiet-phan-quyen/data', this.chon_chuc_vu, {
+                .post('http://127.0.0.1:8000/api/admin/chi-tiet-phan-quyen/data', { id: value.id }, {
                     headers: {
                         Authorization: 'Bearer ' + localStorage.getItem("token_nhan_vien")
                     }
@@ -312,15 +312,21 @@ export default {
                     this.list_phan_quyen = res.data.data;
                 })
                 .catch((res) => {
-                    const list = Object.values(res.response.data.errors);
-                    list.forEach((v, i) => {
-                        this.$toast.error(v[0]);
-                    });
+                    if (res.response && res.response.data && res.response.data.errors) {
+                        const list = Object.values(res.response.data.errors);
+                        list.forEach((v, i) => {
+                            this.$toast.error(v[0]);
+                        });
+                    } else if (res.response && res.response.data && res.response.data.message) {
+                        this.$toast.error(res.response.data.message);
+                    } else {
+                        this.$toast.error('Có lỗi xảy ra khi tải dữ liệu phân quyền');
+                    }
                 });
         },
         xoaPhanQuyen(value) {
             axios
-                .post('http://127.0.0.1:8000/api/admin/chi-tiet-phan-quyen/delete',value, {
+                .post('http://127.0.0.1:8000/api/admin/chi-tiet-phan-quyen/delete', { id: value.id }, {
                     headers: {
                         Authorization: "Bearer " + localStorage.getItem('token_nhan_vien')
                     }
@@ -333,6 +339,13 @@ export default {
                         this.$toast.error(res.data.message)
                     }
                 })
+                .catch((res) => {
+                    if (res.response && res.response.data && res.response.data.message) {
+                        this.$toast.error(res.response.data.message);
+                    } else {
+                        this.$toast.error('Có lỗi xảy ra khi xóa phân quyền');
+                    }
+                });
         },
         layDataChucVu() {
             axios.get('http://127.0.0.1:8000/api/admin/chuc-vu/get-data', {
@@ -412,12 +425,12 @@ export default {
                 });
         },
         timKiem() {
-            if (this.search.ho_va_ten == "") {
-                this.loadData();
+            if (!this.search.noi_dung || this.search.noi_dung.trim() === "") {
+                this.layDataChucVu();
                 return;
             }
             axios
-                .post("http://127.0.0.1:8000/api/admin/chuc-vu/search", this.search, {
+                .post("http://127.0.0.1:8000/api/admin/chuc-vu/search", { noi_dung: this.search.noi_dung }, {
                     headers: {
                         Authorization: "Bearer " + localStorage.getItem("token_nhan_vien")
                     }
@@ -426,11 +439,16 @@ export default {
                     this.list_chuc_vu = res.data.data;
                 })
                 .catch((res) => {
-                    const list = Object.values(res.response.data.errors);
-
-                    list.forEach((v, i) => {
-                        this.$toast.error(v[0]);
-                    });
+                    if (res.response && res.response.data && res.response.data.errors) {
+                        const list = Object.values(res.response.data.errors);
+                        list.forEach((v, i) => {
+                            this.$toast.error(v[0]);
+                        });
+                    } else if (res.response && res.response.data && res.response.data.message) {
+                        this.$toast.error(res.response.data.message);
+                    } else {
+                        this.$toast.error('Có lỗi xảy ra khi tìm kiếm');
+                    }
                 })
         },
     }
