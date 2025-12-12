@@ -23,7 +23,8 @@ import "../../assets/plugins/metismenu/js/metisMenu.min.js";
 import "../../assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js";
 import "../../assets/js/index.js";
 import "../../assets/js/app.js";
-import "../../assets/js/pace.min.js";
+// Removed pace.min.js - loading bar disabled
+import emitter from "../../eventBus.js";
 export default {
     name: "app",
     components: {
@@ -35,7 +36,7 @@ export default {
 @import "../../assets/plugins/simplebar/css/simplebar.css";
 @import "../../assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css";
 @import "../../assets/plugins/metismenu/css/metisMenu.min.css";
-@import "../../assets/css/pace.min.css";
+/* Removed pace.min.css - loading bar disabled */
 @import "../../assets/css/bootstrap.min.css";
 @import "../../assets/css/bootstrap-extended.css";
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
